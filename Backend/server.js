@@ -14,9 +14,9 @@ const taskRoutes = require("./routes/tasks.js");
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/tasks", taskRoutes)
+app.use("/api/tasks", taskRoutes);
 
-/* ----- Server State API ----- */
+/* -------- Server State API -------- */
 const serverState = "active";
 app.get("/server-state", (req, res) => {
   const currentTime = new Date().toLocaleTimeString();
@@ -31,9 +31,18 @@ app.get("/server-state", (req, res) => {
   }
 });
 
-/* ----- Connecting to MongoDB ----- */
+/* ----- Connection to MongoDB ----- */
 const PORT = process.env.PORT || 5000;
+const DB_URI = process.env.MONGO_URI;
 
-app.listen(PORT, (req, res) => {
-  console.log("server running");
-});
+mongoose
+  .connect(DB_URI)
+  .then(() => {
+    // Listening for req
+    app.listen(PORT, (req, res) => {
+      console.log(`connected to db and running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
