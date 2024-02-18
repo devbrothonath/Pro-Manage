@@ -1,0 +1,41 @@
+.boardSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome_date, .board_weekFilter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.welcome_span, .date_span {
+    margin: 20px 30px 10px;
+}
+
+.welcome_span {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.date_span {
+    font-family: "Poppins", sans-serif;
+    color: #707070;
+}
+
+.board_span, .week_filter {
+    margin: 20px 30px 20px;
+}
+
+.board_span {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.week_filter {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

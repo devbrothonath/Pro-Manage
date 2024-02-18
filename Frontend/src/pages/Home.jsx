@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 
 // styles
 import styles from "./Home.module.css"
+
+// components
 import HomeMenu from "../components/HomeMenu/HomeMenu.jsx";
+import HomeContent from "../components/HomeContent/HomeContent.jsx";
 
 const Home = () => {
   const [tasks, setTasks] = useState(null);
@@ -26,32 +29,7 @@ const Home = () => {
     <div className={styles.home}>
       <div className={styles.container}>
         <HomeMenu />
-        <div className={styles.content}>
-          <div className={styles.dashboardSection}>
-            <div className={styles.welcome_date}>
-              <div>
-                <span>Welcome! Dev</span>
-              </div>
-              <div>
-                <span>18th Feb, 2024</span>
-              </div>
-            </div>
-            <div className={styles.board_weekFilter}>
-                <div>
-                    <span>Board</span>
-                </div>
-                <div>
-                    <span>This week</span>
-                </div>
-            </div>
-            <div className={styles.boardsContainer}>
-                <div className={styles.backlog}>Backlog</div>
-                <div className={styles.toDo}>To Do</div>
-                <div className={styles.inProgress}>In Progress</div>
-                <div className={styles.done}>Done</div>
-            </div>
-          </div>
-        </div>
+        <HomeContent />
       </div>
       {/* <div className="tasks">
         {tasks && tasks.map((task) => <TaskCard key={task._id} task={task} />)}
