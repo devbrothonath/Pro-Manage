@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
+import styles from "./App.module.css"
+
 /* ----- Pages ----- */
 import Home from "./pages/Home.jsx"
 
