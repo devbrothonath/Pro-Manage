@@ -4,7 +4,7 @@ import styles from "./HomeMenu.module.css"
 import { Link } from "react-router-dom";
 import HomeMenuBtn from "../HomeMenuBtn/HomeMenuBtn.jsx";
 
-const HomeMenu = () => {
+const HomeMenu = ({ handleButtonClick }) => {
     const buttonProps = [
         {label:"Board", icon:"/icons/board.svg", alt:"board-icon"},
         {label:"Analytics", icon:"/icons/analytics.svg", alt:"analytics-icon"},
@@ -21,7 +21,7 @@ const HomeMenu = () => {
         </div>
         <div className={styles.menuBtns}>
           {buttonProps.map((buttonProps, index) => (
-              <HomeMenuBtn key={index} {...buttonProps} />
+              <HomeMenuBtn key={index} {...buttonProps} handleButtonClick={handleButtonClick} />
           ))}
         </div>
       </div>

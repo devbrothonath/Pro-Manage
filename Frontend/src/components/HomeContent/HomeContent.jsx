@@ -1,12 +1,16 @@
 import React from "react";
 
-import styles from "./HomeContent.module.css"
+import styles from "./HomeContent.module.css";
 import BoardSection from "../BoardSection/BoardSection";
+import AnalyticsSection from "../AnalyticsSection/AnalyticsSection";
+import SettingsSection from "../SettingsSection/SettingsSection";
 
-const HomeContent = () => {
+const HomeContent = ({ activeSection }) => {
   return (
     <div className={styles.content}>
-      <BoardSection />
+      {activeSection === "Board" && <BoardSection />}
+      {activeSection === "Analytics" && <AnalyticsSection />}
+      {activeSection === "Settings" && <SettingsSection />}
     </div>
   );
 };

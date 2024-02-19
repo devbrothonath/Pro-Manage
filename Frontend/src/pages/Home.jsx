@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from "react";
-
-import TaskCard from "../components/TaskCard";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 // styles
-import styles from "./Home.module.css"
+import styles from "./Home.module.css";
 
 // components
 import HomeMenu from "../components/HomeMenu/HomeMenu.jsx";
 import HomeContent from "../components/HomeContent/HomeContent.jsx";
 
 const Home = () => {
-  const [tasks, setTasks] = useState(null);
+  // const [tasks, setTasks] = useState(null);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const response = await fetch("http://localhost:5000/api/tasks");
-      const json = await response.json();
+  // useEffect(() => {
+  //   const fetchTasks = async () => {
+  //     const response = await fetch("http://localhost:5000/api/tasks");
+  //     const json = await response.json();
 
-      if (response.ok) {
-        setTasks(json);
-      }
-    };
+  //     if (response.ok) {
+  //       setTasks(json);
+  //     }
+  //   };
 
-    fetchTasks();
-  }, []);
+  //   fetchTasks();
+  // }, []);
+
+  const [activeSection, setActiveSection] = useState("Board");
+  const handleButtonClick = (label) => {
+    setActiveSection(label);
+  };
   return (
     <div className={styles.home}>
       <div className={styles.container}>
-        <HomeMenu />
-        <HomeContent />
+        <HomeMenu handleButtonClick={handleButtonClick} />
+        <HomeContent activeSection={activeSection} />
       </div>
       {/* <div className="tasks">
         {tasks && tasks.map((task) => <TaskCard key={task._id} task={task} />)}
