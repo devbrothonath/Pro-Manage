@@ -1,23 +1,27 @@
 import React, { useRef, useState } from "react";
+import { format } from "date-fns";
 
 import styles from "./Card.module.css";
 import Dropdown from "../Dropdown/Dropdown";
 
-const Card = () => {
+const Card = ({ card }) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
-  const menus = [ "Edit", "Share", "Delete"];
+  const menus = ["Edit", "Share", "Delete"];
   //   const [showDropdown, setShowDropdown] = useState(false);
   //   console.log(showDropdown);
+  const dueDate = new Date(card.dueDate);
+  const formattedDate = format(dueDate, "MMM do");
+  console.log(formattedDate);
 
   const btnRef = useRef();
   const menuRef = useRef();
 
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== btnRef.current) {
-        setOpen(false)
+      setOpen(false);
     }
-  })
+  });
 
   const handleCollapse = () => {
     setShow(!show);
@@ -29,7 +33,8 @@ const Card = () => {
           <span>HIGH PRIORITY</span>
         </div>
         <div className={styles.card_more_options}>
-          <button ref={btnRef}
+          <button
+            ref={btnRef}
             className={styles.more_options}
             onClick={() => setOpen(!open)}
           >
@@ -38,7 +43,9 @@ const Card = () => {
           {open && (
             <div ref={menuRef} className={styles.card_menu_options}>
               {menus.map((menu) => (
-                <span onClick={() => setOpen(false)} key={menu}>{menu}</span>
+                <span onClick={() => setOpen(false)} key={menu}>
+                  {menu}
+                </span>
               ))}
             </div>
           )}
@@ -50,7 +57,7 @@ const Card = () => {
         </div>
       </div>
       <div className={styles.card_title}>
-        <span>Hero Section</span>
+        <span>{card.title}</span>
       </div>
       <div className={styles.card_checklist}>
         <div className={styles.task_count}>
@@ -67,16 +74,20 @@ const Card = () => {
       </div>
       {show && (
         <div className={styles.tasklist}>
-          <div>Task1</div>
+          {card &&
+            card.tasklist.map((task) => <div key={task._id}>{task.value}</div>)}
+          {/* <div>Task1</div>
           <div>Task2</div>
           <div>Task3</div>
-          <div>Task4</div>
+          <div>Task4</div> */}
         </div>
       )}
       <div className={styles.footer}>
-        <div className={styles.due_date}>
-          <span>Feb 23rd</span>
-        </div>
+        {card.dueDate && (
+          <div className={styles.due_date}>
+            <span>{formattedDate}</span>
+          </div>
+        )}
         <div className={styles.board_btns}>
           <button>PROGRESS</button>
           <button>TO-DO</button>

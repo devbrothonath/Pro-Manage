@@ -17,6 +17,9 @@ const taskSchema = Schema({
     required: true,
   },
   tasklist: [listSchema],
+  dueDate: {
+    type: Date,
+  }
 }, {timestamps : true});
 
 const Task = mongoose.model("Task", taskSchema)

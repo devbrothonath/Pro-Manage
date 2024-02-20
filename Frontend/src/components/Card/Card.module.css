@@ -89,7 +89,7 @@
 
 .footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding-top: 15px;
     
 }
@@ -108,6 +108,7 @@
 .board_btns {
     display: flex;
     gap: 5px;
+    margin-left: auto;
 }
 
 .board_btns button {
@@ -117,7 +118,7 @@
     font-size: 10px;
     font-weight: 500;
     border: none;
-    padding: 4px 7px;
+    padding: 7px 9px;
     border-radius: 10px;
     /* gap: 10px; */
 }
