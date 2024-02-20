@@ -1,0 +1,96 @@
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.card_top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card_label {
+    font-family: var(--main-font);
+}
+
+.card_label > span {
+    font-size: 10px;
+    color: #707070;
+}
+
+.more_options {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.more_options:hover {
+    background: #EEECEC;
+}
+
+.card_title {
+    font-family: var(--main-font);
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card_checklist {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sub-font);
+    font-weight: 500;
+}
+
+.task_count {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.collapse_down {
+    display: flex;
+    align-items: center;
+    /* background: none; */
+    border: none;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    
+}
+
+.due_date {
+    display: flex;
+    align-items: center;
+    font-family: var(--main-font);
+    font-size: 10px;
+    color: #ffffff;
+    background: #CF3636;
+    padding: 7px 9px;
+    border-radius: 10px;
+}
+
+.board_btns {
+    display: flex;
+    gap: 5px;
+}
+
+.board_btns button {
+    font-family: var(--main-font);
+    background: #EEECEC;
+    color: #767575;
+    font-size: 10px;
+    font-weight: 500;
+    border: none;
+    padding: 4px 7px;
+    border-radius: 10px;
+    /* gap: 10px; */
+}

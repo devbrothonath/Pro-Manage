@@ -1,0 +1,64 @@
+.custom_scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+.custom_scroll::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  border: 1px solid #f8f8f8;
+  background: #8DAAB9CC;
+}
+
+.custom_scroll::-webkit-scrollbar-thumb:hover {
+  background: #829caa;
+}
+
+.board {
+  min-width: 350px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #eef2f5;
+  padding: 5px 5px 8px 5px;
+  border-radius: 10px;
+}
+
+.board_top {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.board_top_title {
+    font-family: var(--main-font);
+    font-weight: 500;
+  /* flex: 1; */
+}
+
+.board_top_icons {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.add_btn {
+    display: flex;
+    background: none;
+    border: none;
+}
+
+.collapse_all_btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.board_cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  overflow-y: auto;
+}
