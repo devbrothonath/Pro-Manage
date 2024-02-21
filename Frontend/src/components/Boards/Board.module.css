@@ -41,6 +41,7 @@
 }
 
 .add_btn {
+  position: relative;
     display: flex;
     background: none;
     border: none;

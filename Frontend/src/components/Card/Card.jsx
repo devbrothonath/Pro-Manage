@@ -12,7 +12,6 @@ const Card = ({ card }) => {
   //   console.log(showDropdown);
   const dueDate = new Date(card.dueDate);
   const formattedDate = format(dueDate, "MMM do");
-  console.log(formattedDate);
 
   const btnRef = useRef();
   const menuRef = useRef();
