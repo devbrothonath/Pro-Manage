@@ -12,6 +12,7 @@ const Card = ({ card }) => {
   //   console.log(showDropdown);
   const dueDate = new Date(card.dueDate);
   const formattedDate = format(dueDate, "MMM do");
+  // console.log(card)
 
   const btnRef = useRef();
   const menuRef = useRef();
@@ -29,7 +30,7 @@ const Card = ({ card }) => {
     <div className={styles.card}>
       <div className={styles.card_top}>
         <div className={styles.card_label}>
-          <span>HIGH PRIORITY</span>
+          <span>{card.priority} PRIORITY</span>
         </div>
         <div className={styles.card_more_options}>
           <button

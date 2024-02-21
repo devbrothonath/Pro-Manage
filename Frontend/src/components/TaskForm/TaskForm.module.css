@@ -93,15 +93,21 @@
   margin: 10px 0;
 }
 
-.taskform_task input {
+.taskform_task input[type="checkbox"] {
   height: 16px;
   width: 16px;
 }
 
-.taskform_task span {
+.taskform_task input[type="text"] {
   flex: 1;
   padding: 5px;
   margin: 0 10px;
+  border: none;
+}
+
+.taskform_task input[type="text"]:focus {
+    border: none;
+    outline: none;
 }
 
 .taskform_task button {
@@ -132,8 +138,8 @@
   justify-content: space-between;
 }
 
-.taskform_footer_due_date button {
-  width: fit-content;
+.taskform_footer_due_date input {
+  width: 200px;
   font-family: var(--main-font);
   font-size: 14px;
   font-weight: 500;
@@ -143,6 +149,10 @@
   border-radius: 10px;
   box-shadow: 0px 1px 2px 0px #4d40551a;
   padding: 8px 20px;
+}
+
+.taskform_footer_due_date input {
+    /* opacity: 0; */
 }
 
 .taskform_footer_actions {
