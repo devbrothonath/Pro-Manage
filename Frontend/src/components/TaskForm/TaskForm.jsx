@@ -9,10 +9,11 @@ const TaskForm = (props) => {
   const [completedTasks, setCompletedTasks] = useState(0);
   const [taskCount, setTaskCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [error, setError] = useState(null);
   const [task, setTask] = useState({
     title: "",
     priority: "",
-    taskList: [
+    tasklist: [
       {
         value: "",
         isCompleted: false,
@@ -29,23 +30,23 @@ const TaskForm = (props) => {
     if (name === "priority") {
       setTask({ ...task, [name]: value });
     } else if (name.startsWith("task")) {
-      const taskList = [...task.taskList];
-      taskList[taskIndex].value = value;
-      setTask({ ...task, taskList });
+      const tasklist = [...task.tasklist];
+      tasklist[taskIndex].value = value;
+      setTask({ ...task, tasklist });
     } else if (name === `completed${taskIndex}`) {
-      const taskList = [...task.taskList];
-      taskList[taskIndex].isCompleted = checked;
-      setTask({ ...task, taskList });
+      const tasklist = [...task.tasklist];
+      tasklist[taskIndex].isCompleted = checked;
+      setTask({ ...task, tasklist });
     } else {
       setTask({ ...task, [name]: value });
     }
 
-    const completedTasksCount = task.taskList.filter(
+    const completedTasksCount = task.tasklist.filter(
       (task) => task.isCompleted
     ).length;
     setCompletedTasks(completedTasksCount);
 
-    setTaskCount(task.taskList.length);
+    setTaskCount(task.tasklist.length);
   };
 
   const handleDateChange = (date) => {
@@ -60,13 +61,11 @@ const TaskForm = (props) => {
     setTask({ ...task, dueDate: formattedDate });
   };
 
-  console.log(task);
-
   const handleAddTask = () => {
     setTask({
       ...task,
-      taskList: [
-        ...task.taskList,
+      tasklist: [
+        ...task.tasklist,
         {
           value: "",
           isCompleted: false,
@@ -76,18 +75,50 @@ const TaskForm = (props) => {
   };
 
   const handleDeleteTask = (taskIndex) => {
-    const updatedTaskList = [...task.taskList];
-    updatedTaskList.splice(taskIndex, 1);
-    setTask({ ...task, taskList: updatedTaskList });
+    const updatedtasklist = [...task.tasklist];
+    updatedtasklist.splice(taskIndex, 1);
+    setTask({ ...task, tasklist: updatedtasklist });
   };
 
-  // date input
-  const dateInputRef = useRef(null);
-  const handleDateClick = () => {
-    console.log(dateInputRef);
-    dateInputRef.current.focus();
+  console.log(task);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch("http://localhost:5000/api/tasks", {
+      method: "POST",
+      body: JSON.stringify({
+        ...task,
+        tasklist: task.tasklist.map((item) => ({ ...item })),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log(response);
+    const json = await response.json();
+
+    if (!response.ok) {
+      setError(json.error);
+    }
+    if (response.ok) {
+      console.log("new task added", json);
+      setTask({
+        title: "",
+        priority: "",
+        tasklist: [
+          {
+            value: "",
+            isCompleted: false,
+          },
+        ],
+        dueDate: "",
+      });
+      setError(null);
+      props.onClose();
+    }
   };
-  //   date input end
 
   return (
     <>
@@ -135,13 +166,13 @@ const TaskForm = (props) => {
             <div className={styles.taskform_tasks_tasklist}>
               <label>Checklist</label>
               <span>
-                ({completedTasks}/{task.taskList.length})
+                ({completedTasks}/{task.tasklist.length})
               </span>
               <div
                 className={`${styles.taskform_task_list} ${styles.custom_scroll}`}
               >
                 {task &&
-                  task.taskList.map((task, taskIndex) => (
+                  task.tasklist.map((task, taskIndex) => (
                     <div key={taskIndex} className={styles.taskform_task}>
                       <input
                         type="checkbox"
@@ -182,11 +213,12 @@ const TaskForm = (props) => {
             </div>
             <div className={styles.taskform_footer_actions}>
               <div className={styles.taskform_footer_actions_cancel}>
-                <button>Cancel</button>
+                <button onClick={() => props.onClose()}>Cancel</button>
               </div>
               <div className={styles.taskform_footer_actions_save}>
-                <button>Save</button>
+                <button onClick={handleSubmit}>Save</button>
               </div>
+              {error && <div>{error}</div>}
             </div>
           </div>
         </div>
