@@ -4,7 +4,7 @@ import styles from "./Board.module.css";
 import Card from "../Card/Card";
 import TaskForm from "../TaskForm/TaskForm";
 
-const Board = ({ addButton, board }) => {
+const Board = ({ addButton, board, onMoveCard }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div className={styles.board}>
@@ -12,11 +12,14 @@ const Board = ({ addButton, board }) => {
         <p className={styles.board_top_title}>{board.boardTitle}</p>
         <div className={styles.board_top_icons}>
           {addButton && (
-            <button className={styles.add_btn} onClick={() => setShowModal(true)}>
+            <button
+              className={styles.add_btn}
+              onClick={() => setShowModal(true)}
+            >
               <img src="/icons/plus-icon.svg" alt="plus-icon" />
             </button>
           )}
-          {showModal && <TaskForm onClose={() => setShowModal(false)}/>}
+          {showModal && <TaskForm onClose={() => setShowModal(false)} />}
           <button className={styles.collapse_all_btn}>
             <img src="/icons/collapse.svg" alt="collapse-icon" />
           </button>
@@ -24,13 +27,9 @@ const Board = ({ addButton, board }) => {
       </div>
       <div className={`${styles.board_cards} ${styles.custom_scroll}`}>
         {board.cards &&
-          board.cards.map((card) => <Card key={card._id} card={card} />)}
-        {/* <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card /> */}
+          board.cards.map((card) => (
+            <Card key={card._id} card={card} onMoveCard={onMoveCard} />
+          ))}
       </div>
     </div>
   );

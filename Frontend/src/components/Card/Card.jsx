@@ -2,18 +2,13 @@ import React, { useRef, useState } from "react";
 import { format } from "date-fns";
 
 import styles from "./Card.module.css";
-import Dropdown from "../Dropdown/Dropdown";
 
-const Card = ({ card }) => {
+const Card = ({ card, onMoveCard }) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const menus = ["Edit", "Share", "Delete"];
-  //   const [showDropdown, setShowDropdown] = useState(false);
-  //   console.log(showDropdown);
   const dueDate = new Date(card.dueDate);
   const formattedDate = format(dueDate, "MMM do");
-  // console.log(card)
-
   const btnRef = useRef();
   const menuRef = useRef();
 
@@ -26,6 +21,10 @@ const Card = ({ card }) => {
   const handleCollapse = () => {
     setShow(!show);
   };
+
+  const handleMoveCard = (targetBoardId) => {
+    onMoveCard(card._id, targetBoardId)
+  }
   return (
     <div className={styles.card}>
       <div className={styles.card_top}>
@@ -49,11 +48,6 @@ const Card = ({ card }) => {
               ))}
             </div>
           )}
-          {/* <Dropdown show={showDropdown} onClose={() => setShowDropdown(false)}>
-            <div className={styles.card_dropdown}>
-              <span>Delete</span>
-            </div>
-          </Dropdown> */}
         </div>
       </div>
       <div className={styles.card_title}>
@@ -76,10 +70,6 @@ const Card = ({ card }) => {
         <div className={styles.tasklist}>
           {card &&
             card.tasklist.map((task) => <div key={task._id}>{task.value}</div>)}
-          {/* <div>Task1</div>
-          <div>Task2</div>
-          <div>Task3</div>
-          <div>Task4</div> */}
         </div>
       )}
       <div className={styles.footer}>
@@ -89,8 +79,8 @@ const Card = ({ card }) => {
           </div>
         )}
         <div className={styles.board_btns}>
-          <button>PROGRESS</button>
-          <button>TO-DO</button>
+          <button onClick={() => handleMoveCard(1)}>BACKLOG</button>
+          <button onClick={() => handleMoveCard(2)}>TO-DO</button>
           <button>DONE</button>
         </div>
       </div>

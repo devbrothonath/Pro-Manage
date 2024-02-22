@@ -5,14 +5,32 @@ import Board from "../Boards/Board.jsx";
 
 const BoardSection = () => {
   const [tasks, setTasks] = useState(null);
+  const [boards, setBoards] = useState([]);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const response = await fetch("http://localhost:5000/api/tasks");
-      const json = await response.json();
+      try {
+        const response = await fetch("http://localhost:5000/api/tasks");
+        const json = await response.json();
 
-      if (response.ok) {
-        setTasks(json);
+        if (response.ok) {
+          setTasks(json);
+
+          setBoards([
+            {
+              id: 1,
+              boardTitle: "Backlog",
+              cards: [],
+            },
+            {
+              id: 2,
+              boardTitle: "To do",
+              cards: json,
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching tasks", error);
       }
     };
 
@@ -20,35 +38,65 @@ const BoardSection = () => {
   }, []);
   // console.log(tasks)
 
-  const boards = [
-    {
-      id: 1,
-      boardTitle: "Backlog",
-      cards: tasks
-    },
-    {
-      id: 2,
-      boardTitle: "To do",
-      cards: tasks
-    }
-  ]
+  // const moveCard = (cardId, targetBoardId) => {
+  //   // Find the source board and card
+  //   const sourceBoard = boards.find((board) =>
+  //     board.cards.some((card) => card.id === cardId)
+  //   );
+  //   const sourceCardIndex = sourceBoard.cards.findIndex(
+  //     (card) => card.id === cardId
+  //   );
+  //   const sourceCard = sourceBoard.cards[sourceCardIndex];
 
-  // const [allBoards, setAllBoards] = useState(boards)
-  // console.log(allBoards)
-  // const addCard = () => {
-  //   const card = {
-  //   }
-  // }
-  const removeCard = (cardIndex, boardIndex) => {
-    const bIndex = boards.findIndex((item) => item.id === boardIndex);
-    if(bIndex < 0) return;
+  //   // Remove the card from the source board
+  //   const updatedSourceBoard = {
+  //     ...sourceBoard,
+  //     cards: [
+  //       ...sourceBoard.cards.slice(0, sourceCardIndex),
+  //       ...sourceBoard.cards.slice(sourceCardIndex + 1),
+  //     ],
+  //   };
 
-    const cIndex = boards[bIndex].cards.findIndex((item) => item.id === cardIndex);
-    if(cIndex < 0) return;
+  //   // Find the target board
+  //   const targetBoard = boards.find((board) => board.id === targetBoardId);
 
-    const tempBoards = [...boards]
-    tempBoards[bIndex].cards.splice(cIndex,1)
-  }
+  //   // Add the card to the target board
+  //   const updatedTargetBoard = {
+  //     ...targetBoard,
+  //     cards: [...targetBoard.cards, sourceCard],
+  //   };
+
+  //   // Update the boards in the state
+  //   setBoards((prevBoards) =>
+  //     prevBoards.map((board) =>
+  //       board.id === updatedSourceBoard.id
+  //         ? updatedSourceBoard
+  //         : board.id === updatedTargetBoard.id
+  //         ? updatedTargetBoard
+  //         : board
+  //     )
+  //   );
+  // };
+
+  const moveCard = (cardId, targetBoardId) => {
+    const updatedBoards = boards.map((board) => {
+      return {
+        ...board,
+        cards: board.cards.filter((card) => card._id !== cardId),
+      };
+    });
+
+    const targetBoardIndex = updatedBoards.findIndex(
+      (board) => board.id === targetBoardId
+    );
+
+    updatedBoards[targetBoardIndex].cards.push(
+      tasks.find((task) => task._id === cardId)
+    );
+
+    setBoards(updatedBoards);
+  };
+
   return (
     <div className={styles.boardSection}>
       <div className={styles.welcome_date}>
@@ -70,18 +118,14 @@ const BoardSection = () => {
       </div>
       <div className={`${styles.boardsContainer} ${styles.custom_scroll}`}>
         <div className={styles.boards}>
-          {boards.map((board) => <Board
-            key={board.id}
-            board={board}
-            addButton={board.id === 2}
-          />)}
-          {/* {[1,2,3,4].map((index) => (
-            <Board key={index} addButton={index === 2} />
-          ))} */}
-          {/* <Board />
-          <Board />
-          <Board />
-          <Board /> */}
+          {boards.map((board) => (
+            <Board
+              key={board.id}
+              board={board}
+              onMoveCard={moveCard}
+              addButton={board.id === 2}
+            />
+          ))}
         </div>
       </div>
     </div>
