@@ -37,6 +37,38 @@ const createTask = async (req, res) => {
   }
 };
 
+// POST a card move to different board
+const moveCard = async (req, res) => {
+  try {
+    const { cardId, targetBoardId } = req.body;
+
+    // Update the task's boardId in the database
+    await Task.findByIdAndUpdate(cardId, { boardId: targetBoardId });
+
+    // Fetch the updated tasks from the database
+    const updatedTasks = await Task.find({}).sort({ createdAt: -1 });
+
+    res.status(200).json(updatedTasks);
+  } catch (error) {
+    console.error("Error moving card:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+  // const { cardId, targetBoardId } = req.body;
+  // const tasks = await Task.find({}).sort({ createdAt: -1 });
+
+  // const updatedTasks = tasks.map((task) => {
+  //   if(task._id === cardId) {
+  //     return { ...task, boardId: targetBoardId }
+  //   }
+  //   return task;
+  // });
+
+  // tasks.length = 0;
+  // tasks.push(...updatedTasks);
+
+  // res.status(200).json(tasks)
+};
+
 // DELETE a task
 const deleteTask = async (req, res) => {
   const { id } = req.params;
@@ -74,4 +106,11 @@ const updateTask = async (req, res) => {
   res.status(200).json(task);
 };
 
-module.exports = { getTasks, getTask, createTask, deleteTask, updateTask };
+module.exports = {
+  getTasks,
+  getTask,
+  createTask,
+  moveCard,
+  deleteTask,
+  updateTask,
+};

@@ -17,6 +17,7 @@ const taskSchema = Schema({
     required: true,
   },
   tasklist: [listSchema],
+  boardId: Number,
   dueDate: {
     type: Date,
   }

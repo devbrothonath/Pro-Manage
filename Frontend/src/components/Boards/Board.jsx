@@ -4,7 +4,7 @@ import styles from "./Board.module.css";
 import Card from "../Card/Card";
 import TaskForm from "../TaskForm/TaskForm";
 
-const Board = ({ addButton, board, onMoveCard }) => {
+const Board = ({ addButton, board, onMoveCard, isInBoard }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div className={styles.board}>
@@ -28,7 +28,7 @@ const Board = ({ addButton, board, onMoveCard }) => {
       <div className={`${styles.board_cards} ${styles.custom_scroll}`}>
         {board.cards &&
           board.cards.map((card) => (
-            <Card key={card._id} card={card} onMoveCard={onMoveCard} />
+            <Card key={card._id} card={card} onMoveCard={onMoveCard} isInBoard={isInBoard} />
           ))}
       </div>
     </div>

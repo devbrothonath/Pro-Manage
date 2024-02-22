@@ -3,6 +3,7 @@ const {
   getTasks,
   getTask,
   createTask,
+  moveCard,
   deleteTask,
   updateTask
 } = require("../controllers/taskController.js");
@@ -17,6 +18,9 @@ router.get("/:id", getTask);
 
 // POST a new task
 router.post("/", createTask);
+
+// POST a card movement to different board
+router.post("/moveCard", moveCard)
 
 // DELETE a single task
 router.delete("/:id", deleteTask);

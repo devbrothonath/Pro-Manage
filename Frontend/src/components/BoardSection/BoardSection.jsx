@@ -27,6 +27,16 @@ const BoardSection = () => {
               boardTitle: "To do",
               cards: json,
             },
+            {
+              id: 3,
+              boardTitle: "Progress",
+              cards: [],
+            },
+            {
+              id: 4,
+              boardTitle: "Done",
+              cards: [],
+            },
           ]);
         }
       } catch (error) {
@@ -36,7 +46,6 @@ const BoardSection = () => {
 
     fetchTasks();
   }, []);
-  // console.log(tasks)
 
   // const moveCard = (cardId, targetBoardId) => {
   //   // Find the source board and card
@@ -78,24 +87,103 @@ const BoardSection = () => {
   //   );
   // };
 
-  const moveCard = (cardId, targetBoardId) => {
-    const updatedBoards = boards.map((board) => {
-      return {
-        ...board,
-        cards: board.cards.filter((card) => card._id !== cardId),
-      };
-    });
+  // const moveCard = async (cardId, targetBoardId) => {
+  //   try {
+  //     const response = await fetch("http://localhost:5000/api/tasks/moveCard", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ cardId, targetBoardId })
+  //   })
 
-    const targetBoardIndex = updatedBoards.findIndex(
-      (board) => board.id === targetBoardId
-    );
+  //   if(response.ok) {
+  //     const updatedBoards = boards.map((board) => {
+  //       return {
+  //         ...board,
+  //         cards: board.cards.filter((card) => card._id !== cardId),
+  //       };
+  //     });
 
-    updatedBoards[targetBoardIndex].cards.push(
-      tasks.find((task) => task._id === cardId)
-    );
+  //     const movedCard = tasks.find((task) => task._id === cardId)
+  //     const targetBoardIndex = updatedBoards.findIndex(
+  //       (board) => board.id === targetBoardId
+  //     );
 
-    setBoards(updatedBoards);
+  //     updatedBoards[targetBoardIndex].cards.push(movedCard);
+
+  //     setBoards(updatedBoards);
+  //   } else {
+  //     console.error("Failed to move card:", response.statusText)
+  //   }} catch (error) {
+  //     console.error("Error moving card:", error)
+  //   }
+  // };
+
+  const moveCard = async (cardId, targetBoardId) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/tasks/moveCard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cardId, targetBoardId }),
+      });
+
+      if (response.ok) {
+        // Fetch the updated data from the server
+        const updatedDataResponse = await fetch(
+          "http://localhost:5000/api/tasks"
+        );
+        const updatedData = await updatedDataResponse.json();
+
+        // Update state with the fetched data
+        setBoards((prevBoards) =>
+          prevBoards.map((board) => {
+            return {
+              ...board,
+              cards: board.cards.filter((card) => card._id !== cardId),
+            };
+          })
+        );
+
+        const targetBoardIndex = boards.findIndex(
+          (board) => board.id === targetBoardId
+        );
+
+        setBoards((prevBoards) =>
+          prevBoards.map((board, index) => {
+            if (index === targetBoardIndex) {
+              return {
+                ...board,
+                cards: [
+                  ...board.cards,
+                  updatedData.find((task) => task._id === cardId),
+                ],
+              };
+            } else {
+              return board;
+            }
+          })
+        );
+      } else {
+        console.error("Failed to move card:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error moving card:", error);
+    }
   };
+
+  const isInBoard = (cardId, boardId) => {
+    return boards.some((board) => {
+      return (
+        board.id === boardId && board.cards.some((card) => card._id === cardId)
+      );
+    });
+  };
+
+  console.log(boards);
+  // console.log()
 
   return (
     <div className={styles.boardSection}>
@@ -123,6 +211,7 @@ const BoardSection = () => {
               key={board.id}
               board={board}
               onMoveCard={moveCard}
+              isInBoard={(cardId, boardId) => isInBoard(cardId, boardId)}
               addButton={board.id === 2}
             />
           ))}

@@ -3,7 +3,7 @@ import { format } from "date-fns";
 
 import styles from "./Card.module.css";
 
-const Card = ({ card, onMoveCard }) => {
+const Card = ({ card, onMoveCard, isInBoard }) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const menus = ["Edit", "Share", "Delete"];
@@ -22,9 +22,13 @@ const Card = ({ card, onMoveCard }) => {
     setShow(!show);
   };
 
+  
+
   const handleMoveCard = (targetBoardId) => {
-    onMoveCard(card._id, targetBoardId)
-  }
+    console.log(targetBoardId);
+    onMoveCard(card._id, targetBoardId);
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.card_top}>
@@ -79,9 +83,18 @@ const Card = ({ card, onMoveCard }) => {
           </div>
         )}
         <div className={styles.board_btns}>
-          <button onClick={() => handleMoveCard(1)}>BACKLOG</button>
-          <button onClick={() => handleMoveCard(2)}>TO-DO</button>
-          <button>DONE</button>
+          {!isInBoard(card._id, 1) && (
+            <button onClick={() => handleMoveCard(1)}>BACKLOG</button>
+          )}
+          {!isInBoard(card._id, 2) && (
+            <button onClick={() => handleMoveCard(2)}>TO-DO</button>
+          )}
+          {!isInBoard(card._id, 3) && (
+            <button onClick={() => handleMoveCard(3)}>PROGRESS</button>
+          )}
+          {!isInBoard(card._id, 4) && (
+            <button onClick={() => handleMoveCard(4)}>DONE</button>
+          )}
         </div>
       </div>
     </div>
