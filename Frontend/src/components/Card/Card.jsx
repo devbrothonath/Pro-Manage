@@ -12,6 +12,19 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
   const btnRef = useRef();
   const menuRef = useRef();
 
+  const getPriorityIcon = (priority) => {
+    switch(priority) {
+      case "high" :
+        return "/icons/redCircle.svg";
+      case "moderate" :
+        return "/icons/blueCircle.svg";
+      case "low" :
+        return "/icons/greenCircle.svg";
+      default:
+        return "";
+    }
+  }
+
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== btnRef.current) {
       setOpen(false);
@@ -22,7 +35,10 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
     setShow(!show);
   };
 
-  
+  const completedTasksCount = card.tasklist.filter(
+    (task) => task.isCompleted
+  ).length;
+  // setCompletedTasks(completedTasksCount);
 
   const handleMoveCard = (targetBoardId) => {
     console.log(targetBoardId);
@@ -33,16 +49,18 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
     <div className={styles.card}>
       <div className={styles.card_top}>
         <div className={styles.card_label}>
-          <span>{card.priority} PRIORITY</span>
+          <img src={getPriorityIcon(card.priority)} alt={`${card.priority} priority icon`} />
+          <span>{card.priority} priority</span>
         </div>
         <div className={styles.card_more_options}>
-          <button
+          <img
             ref={btnRef}
-            className={styles.more_options}
             onClick={() => setOpen(!open)}
-          >
-            <img src="/icons/more-options.svg" alt="more-options" />
-          </button>
+            src="/icons/more-options.svg"
+            alt="more-options"
+          />
+          {/* <button className={styles.more_options}>
+          </button> */}
           {open && (
             <div ref={menuRef} className={styles.card_menu_options}>
               {menus.map((menu) => (
@@ -60,7 +78,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
       <div className={styles.card_checklist}>
         <div className={styles.task_count}>
           <span>Checklist</span>
-          <span>(0/3)</span>
+          <span>({completedTasksCount}/{card.tasklist.length})</span>
         </div>
         <button className={styles.collapse_down} onClick={handleCollapse}>
           {show ? (
@@ -73,7 +91,18 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
       {show && (
         <div className={styles.tasklist}>
           {card &&
-            card.tasklist.map((task) => <div key={task._id}>{task.value}</div>)}
+            card.tasklist.map((task) => (
+              <div key={task._id} className={styles.tasklist_task}>
+                <input
+                  type="checkbox"
+                  // name={`completed${taskIndex}`}
+                  defaultChecked={task.isCompleted}
+                  disabled
+                  // onChange={(e) => handleInputChange(e, taskIndex)}
+                />
+                <span>{task.value}</span>
+              </div>
+            ))}
         </div>
       )}
       <div className={styles.footer}>

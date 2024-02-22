@@ -57,6 +57,10 @@
   font-family: var(--sub-font);
 }
 
+.taskform_priority img {
+  margin: 0 5px;
+}
+
 .taskform_priority button {
   font-family: var(--main-font);
   font-weight: 500;
@@ -66,6 +70,15 @@
   border-radius: 5px;
   box-shadow: 0px 1px 2px 0px #4d40551a;
   padding: 3px 8px;
+  cursor: pointer;
+}
+
+.taskform_priority button:hover {
+  background-color: #eeececc6;
+}
+
+.taskform_priority button:focus {
+  background-color: #a8a7a742;
 }
 
 .taskform_tasks {
@@ -139,7 +152,8 @@
 }
 
 .taskform_footer_due_date input {
-  width: 200px;
+  text-align: center;
+  width: 180px;
   font-family: var(--main-font);
   font-size: 14px;
   font-weight: 500;

@@ -49,17 +49,41 @@ const TaskForm = (props) => {
     setTaskCount(task.tasklist.length);
   };
 
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  //   const formattedDate = date
+  //     ? date.toLocaleDateString("en-IN", {
+  //         year: "numeric",
+  //         month: "short",
+  //         day: "numeric",
+  //       })
+  //     : "";
+  //   console.log(formattedDate);
+  //   setTask({ ...task, dueDate: formattedDate });
+  // };
+
   const handleDateChange = (date) => {
-    setSelectedDate(date);
-    const formattedDate = date
-      ? date.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        })
+    // Convert the selected date to UTC before sending it to the server
+    const utcDate = date
+      ? new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+      : null;
+
+    setSelectedDate(utcDate);
+
+    const formattedDate = utcDate
+      ? utcDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }) // Using ISO string ensures UTC format
       : "";
+
     console.log(formattedDate);
+
     setTask({ ...task, dueDate: formattedDate });
   };
+
+  console.log(task);
 
   const handleAddTask = () => {
     setTask({
@@ -143,6 +167,7 @@ const TaskForm = (props) => {
               value="high"
               onClick={(e) => handleInputChange(e)}
             >
+              <img src="/icons/redCircle.svg" alt="red-icon" />
               HIGH PRIORITY
             </button>
             <button
@@ -150,6 +175,7 @@ const TaskForm = (props) => {
               value="moderate"
               onClick={(e) => handleInputChange(e)}
             >
+              <img src="/icons/blueCircle.svg" alt="blue-icon" />
               MODERATE PRIORITY
             </button>
             <button
@@ -157,6 +183,7 @@ const TaskForm = (props) => {
               value="low"
               onClick={(e) => handleInputChange(e)}
             >
+              <img src="/icons/greenCircle.svg" alt="green-icon" />
               LOW PRIORITY
             </button>
             {/* <div className={styles.taskform_priority_btns}>
@@ -206,7 +233,7 @@ const TaskForm = (props) => {
                 onChange={handleDateChange}
                 placeholderText="Select Due Date"
                 minDate={new Date()}
-                dateFormat="MMMM dd"
+                dateFormat="MMMM dd yyyy"
                 value={task.dueDate}
               />
               {/* <input type="date" ref={dateInputRef} /> */}
