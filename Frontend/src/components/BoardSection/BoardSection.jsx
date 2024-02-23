@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import styles from "./BoardSection.module.css";
 import Board from "../Boards/Board.jsx";
+import { useTasksContext } from "../../hooks/useTasksContext.jsx";
 
 const BoardSection = () => {
   const [tasks, setTasks] = useState(null);

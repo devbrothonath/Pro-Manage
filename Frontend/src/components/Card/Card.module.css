@@ -112,11 +112,12 @@
 .tasklist_task input[type="checkbox"] {
   height: 15px;
   width: 15px;
+  pointer-events: none;
 }
 
 .tasklist_task input[type="checkbox"]:disabled {
   /* opacity: 0.5; Set the opacity to make it visually less prominent */
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
   /* opacity: 2.5; */
 }
 

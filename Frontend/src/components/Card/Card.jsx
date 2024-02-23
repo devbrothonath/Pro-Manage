@@ -97,7 +97,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
                   type="checkbox"
                   // name={`completed${taskIndex}`}
                   defaultChecked={task.isCompleted}
-                  disabled
+                  // disabled
                   // onChange={(e) => handleInputChange(e, taskIndex)}
                 />
                 <span>{task.value}</span>
