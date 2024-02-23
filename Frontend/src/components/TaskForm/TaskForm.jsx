@@ -12,6 +12,7 @@ const TaskForm = (props) => {
   const [taskCount, setTaskCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([])
   const [task, setTask] = useState({
     title: "",
     priority: "",
@@ -51,21 +52,7 @@ const TaskForm = (props) => {
     setTaskCount(task.tasklist.length);
   };
 
-  // const handleDateChange = (date) => {
-  //   setSelectedDate(date);
-  //   const formattedDate = date
-  //     ? date.toLocaleDateString("en-IN", {
-  //         year: "numeric",
-  //         month: "short",
-  //         day: "numeric",
-  //       })
-  //     : "";
-  //   console.log(formattedDate);
-  //   setTask({ ...task, dueDate: formattedDate });
-  // };
-
   const handleDateChange = (date) => {
-    // Convert the selected date to UTC before sending it to the server
     const utcDate = date
       ? new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
       : null;
@@ -77,7 +64,7 @@ const TaskForm = (props) => {
         year: "numeric",
         month: "long",
         day: "numeric"
-      }) // Using ISO string ensures UTC format
+      }) 
       : "";
 
     console.log(formattedDate);
@@ -85,7 +72,7 @@ const TaskForm = (props) => {
     setTask({ ...task, dueDate: formattedDate });
   };
 
-  console.log(task);
+  console.log(task.tasklist[0].value);
 
   const handleAddTask = () => {
     setTask({
@@ -127,6 +114,8 @@ const TaskForm = (props) => {
 
     if (!response.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields)
+      console.log(emptyFields)
     }
     if (response.ok) {
       console.log("new task added", json);
@@ -143,6 +132,7 @@ const TaskForm = (props) => {
         dueDate: "",
       });
       setError(null);
+      setEmptyFields([]);
       props.onClose();
     }
   };
@@ -153,7 +143,7 @@ const TaskForm = (props) => {
         <div className={`${styles.taskform} ${styles.custom_scroll}`}>
           <div className={styles.taskform_box}>
             <div className={styles.taskform_box_title}>
-              <label>Title</label>
+              <label>Title <span className={styles.required}>*</span></label>
               <input
                 name="title"
                 type="text"
@@ -164,7 +154,7 @@ const TaskForm = (props) => {
             </div>
           </div>
           <div className={styles.taskform_priority}>
-            <label>Select Priority</label>
+            <label>Select Priority <span className={styles.required}>*</span></label>
             <button
               name="priority"
               value="high"
@@ -194,10 +184,11 @@ const TaskForm = (props) => {
           </div>
           <div className={`${styles.taskform_tasks} ${styles.custom_scroll}`}>
             <div className={styles.taskform_tasks_tasklist}>
-              <label>Checklist</label>
+              <label>Checklist </label>
               <span>
                 ({completedTasks}/{task.tasklist.length})
               </span>
+              <span className={styles.required}>*</span>
               <div
                 className={`${styles.taskform_task_list} ${styles.custom_scroll}`}
               >
@@ -250,7 +241,7 @@ const TaskForm = (props) => {
               </div>
             </div>
           </div>
-              {error && <div className={styles.error}>{error}</div>}
+              {error && <div className={styles.error}>Please fill all necessary fields</div>}
         </div>
       </Modal>
     </>

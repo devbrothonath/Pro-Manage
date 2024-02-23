@@ -1,13 +1,18 @@
 import React, { useRef, useState } from "react";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
+
+import copy from "clipboard-copy";
 import useTasksContext from "../../hooks/useTasksContext.jsx";
 
 import styles from "./Card.module.css";
 
+
 const Card = ({ card, onMoveCard, isInBoard }) => {
-  const {dispatch} = useTasksContext();
+  const { dispatch } = useTasksContext();
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const menus = ["Edit", "Share", "Delete"];
   const dueDate = new Date(card.dueDate);
   const formattedDate = format(dueDate, "MMM do");
@@ -34,15 +39,25 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
   });
 
   const handleDelete = async () => {
-    const response = await fetch ("http://localhost:5000/api/tasks/" + card._id, {
-      method: "DELETE",
-    })
+    const response = await fetch(
+      "http://localhost:5000/api/tasks/" + card._id,
+      {
+        method: "DELETE",
+      }
+    );
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({type: "DELETE_TASK", payload: json})
+      dispatch({ type: "DELETE_TASK", payload: json });
     }
-  }
+  };
+
+  const handleShare = async () => {
+    console.log(card._id);
+    await copy(`http://localhost:5173/card/${card._id}`);
+    setLinkCopied(true);
+    toast("Link copied to clipboard");
+  };
 
   const handleCollapse = () => {
     setShow(!show);
@@ -80,13 +95,8 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
           {open && (
             <div ref={menuRef} className={styles.card_menu_options}>
               <span>Edit</span>
-              <span>Share</span>
+              <span onClick={handleShare}>Share</span>
               <span onClick={handleDelete}>Delete</span>
-              {/* {menus.map((menu) => (
-                <span onClick={() => setOpen(false)} key={menu}>
-                  {menu}
-                </span>
-              ))} */}
             </div>
           )}
         </div>

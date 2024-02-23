@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { format } from "date-fns";
 
 import styles from "./BoardSection.module.css";
 import Board from "../Boards/Board.jsx";
 import useTasksContext from "../../hooks/useTasksContext.jsx";
 
 const BoardSection = () => {
-  const {tasks, dispatch} = useTasksContext()
+  const { tasks, dispatch } = useTasksContext();
   // const [tasks, setTasks] = useState(null);
-  const {contextBoards} = useTasksContext([]);
+  const { contextBoards } = useTasksContext([]);
   const [boards, setBoards] = useState([]);
+  const today = new Date();
+  const formattedDate = format(today, "do MMM, yyyy");
+  const [open, setOpen] = useState(false);
+  const btnRef = useRef();
+  const menuRef = useRef();
+  // console.log(formattedDate)
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -17,11 +24,10 @@ const BoardSection = () => {
         const json = await response.json();
 
         if (response.ok) {
-          dispatch({type: "SET_TASKS", payload: json})
+          dispatch({ type: "SET_TASKS", payload: json });
           // setTasks(json);
 
-          setBoards(
-            [
+          setBoards([
             {
               id: 1,
               boardTitle: "Backlog",
@@ -114,8 +120,20 @@ const BoardSection = () => {
     });
   };
 
+  window.addEventListener("click", (e) => {
+    if (e.target !== menuRef.current && e.target !== btnRef.current) {
+      setOpen(false);
+    }
+  });
+
   // console.log(boards);
   // console.log()
+  // const date = new Date().toLocaleDateString("en-US", {
+  //   year: "numeric",
+  //   month: "short",
+  //   day: "numeric"
+  // })
+  // console.log(date)
 
   return (
     <div className={styles.boardSection}>
@@ -124,7 +142,7 @@ const BoardSection = () => {
           <span>Welcome! Dev</span>
         </div>
         <div className={styles.date_span}>
-          <span>18th Feb, 2024</span>
+          <span>{formattedDate}</span>
         </div>
       </div>
       <div className={styles.board_weekFilter}>
@@ -133,7 +151,19 @@ const BoardSection = () => {
         </div>
         <div className={styles.week_filter}>
           <span>This week</span>
-          <img src="/icons/dropdown.svg" alt="dropdown" />
+          <img
+            ref={btnRef}
+            onClick={() => setOpen(!open)}
+            src="/icons/dropdown.svg"
+            alt="dropdown"
+          />
+          {open && (
+            <div ref={menuRef} className={styles.week_filter_options}>
+              <span>This week</span>
+              <span>This month</span>
+              <span>This year</span>
+            </div>
+          )}
         </div>
       </div>
       <div className={`${styles.boardsContainer} ${styles.custom_scroll}`}>
