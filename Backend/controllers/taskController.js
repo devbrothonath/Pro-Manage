@@ -28,6 +28,21 @@ const getTask = async (req, res) => {
 // POST a new task
 const createTask = async (req, res) => {
   const taskData = req.body;
+
+  let emptyFields = []
+
+  if (!taskData.title) {
+    emptyFields.push("title")
+  }
+  if (!taskData.priority) {
+    emptyFields.push("priority")
+  }
+  // if (!taskData.taskList) {
+  //   emptyFields.push("taskList")
+  // }
+  if(emptyFields.length > 0) {
+    return res.status(400).json({error: "Please fill in all the necessary fields", emptyFields})
+  }
   // add document to db
   try {
     const task = await Task.create(taskData);
