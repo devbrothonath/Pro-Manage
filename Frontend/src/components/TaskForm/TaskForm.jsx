@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import useTasksContext from "../../hooks/useTasksContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "../Modal/Modal";
@@ -6,6 +7,7 @@ import Modal from "../Modal/Modal";
 import styles from "./TaskForm.module.css";
 
 const TaskForm = (props) => {
+  const {dispatch} = useTasksContext()
   const [completedTasks, setCompletedTasks] = useState(0);
   const [taskCount, setTaskCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -128,6 +130,7 @@ const TaskForm = (props) => {
     }
     if (response.ok) {
       console.log("new task added", json);
+      dispatch({type: "CREATE_TASK", payload: json})
       setTask({
         title: "",
         priority: "",
@@ -245,9 +248,9 @@ const TaskForm = (props) => {
               <div className={styles.taskform_footer_actions_save}>
                 <button onClick={handleSubmit}>Save</button>
               </div>
-              {error && <div>{error}</div>}
             </div>
           </div>
+              {error && <div className={styles.error}>{error}</div>}
         </div>
       </Modal>
     </>

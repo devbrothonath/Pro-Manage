@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 import { format } from "date-fns";
+import useTasksContext from "../../hooks/useTasksContext.jsx";
 
 import styles from "./Card.module.css";
 
 const Card = ({ card, onMoveCard, isInBoard }) => {
+  const {dispatch} = useTasksContext();
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const menus = ["Edit", "Share", "Delete"];
@@ -13,23 +15,34 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
   const menuRef = useRef();
 
   const getPriorityIcon = (priority) => {
-    switch(priority) {
-      case "high" :
+    switch (priority) {
+      case "high":
         return "/icons/redCircle.svg";
-      case "moderate" :
+      case "moderate":
         return "/icons/blueCircle.svg";
-      case "low" :
+      case "low":
         return "/icons/greenCircle.svg";
       default:
         return "";
     }
-  }
+  };
 
   window.addEventListener("click", (e) => {
     if (e.target !== menuRef.current && e.target !== btnRef.current) {
       setOpen(false);
     }
   });
+
+  const handleDelete = async () => {
+    const response = await fetch ("http://localhost:5000/api/tasks/" + card._id, {
+      method: "DELETE",
+    })
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({type: "DELETE_TASK", payload: json})
+    }
+  }
 
   const handleCollapse = () => {
     setShow(!show);
@@ -49,7 +62,10 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
     <div className={styles.card}>
       <div className={styles.card_top}>
         <div className={styles.card_label}>
-          <img src={getPriorityIcon(card.priority)} alt={`${card.priority} priority icon`} />
+          <img
+            src={getPriorityIcon(card.priority)}
+            alt={`${card.priority} priority icon`}
+          />
           <span>{card.priority} priority</span>
         </div>
         <div className={styles.card_more_options}>
@@ -63,11 +79,14 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
           </button> */}
           {open && (
             <div ref={menuRef} className={styles.card_menu_options}>
-              {menus.map((menu) => (
+              <span>Edit</span>
+              <span>Share</span>
+              <span onClick={handleDelete}>Delete</span>
+              {/* {menus.map((menu) => (
                 <span onClick={() => setOpen(false)} key={menu}>
                   {menu}
                 </span>
-              ))}
+              ))} */}
             </div>
           )}
         </div>
@@ -78,7 +97,9 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
       <div className={styles.card_checklist}>
         <div className={styles.task_count}>
           <span>Checklist</span>
-          <span>({completedTasksCount}/{card.tasklist.length})</span>
+          <span>
+            ({completedTasksCount}/{card.tasklist.length})
+          </span>
         </div>
         <button className={styles.collapse_down} onClick={handleCollapse}>
           {show ? (

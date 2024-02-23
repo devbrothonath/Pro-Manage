@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 
 import styles from "./BoardSection.module.css";
 import Board from "../Boards/Board.jsx";
-import { useTasksContext } from "../../hooks/useTasksContext.jsx";
+import useTasksContext from "../../hooks/useTasksContext.jsx";
 
 const BoardSection = () => {
-  const [tasks, setTasks] = useState(null);
+  const {tasks, dispatch} = useTasksContext()
+  // const [tasks, setTasks] = useState(null);
+  const {contextBoards} = useTasksContext([]);
   const [boards, setBoards] = useState([]);
 
   useEffect(() => {
@@ -15,9 +17,11 @@ const BoardSection = () => {
         const json = await response.json();
 
         if (response.ok) {
-          setTasks(json);
+          dispatch({type: "SET_TASKS", payload: json})
+          // setTasks(json);
 
-          setBoards([
+          setBoards(
+            [
             {
               id: 1,
               boardTitle: "Backlog",
@@ -46,80 +50,7 @@ const BoardSection = () => {
     };
 
     fetchTasks();
-  }, []);
-
-  // const moveCard = (cardId, targetBoardId) => {
-  //   // Find the source board and card
-  //   const sourceBoard = boards.find((board) =>
-  //     board.cards.some((card) => card.id === cardId)
-  //   );
-  //   const sourceCardIndex = sourceBoard.cards.findIndex(
-  //     (card) => card.id === cardId
-  //   );
-  //   const sourceCard = sourceBoard.cards[sourceCardIndex];
-
-  //   // Remove the card from the source board
-  //   const updatedSourceBoard = {
-  //     ...sourceBoard,
-  //     cards: [
-  //       ...sourceBoard.cards.slice(0, sourceCardIndex),
-  //       ...sourceBoard.cards.slice(sourceCardIndex + 1),
-  //     ],
-  //   };
-
-  //   // Find the target board
-  //   const targetBoard = boards.find((board) => board.id === targetBoardId);
-
-  //   // Add the card to the target board
-  //   const updatedTargetBoard = {
-  //     ...targetBoard,
-  //     cards: [...targetBoard.cards, sourceCard],
-  //   };
-
-  //   // Update the boards in the state
-  //   setBoards((prevBoards) =>
-  //     prevBoards.map((board) =>
-  //       board.id === updatedSourceBoard.id
-  //         ? updatedSourceBoard
-  //         : board.id === updatedTargetBoard.id
-  //         ? updatedTargetBoard
-  //         : board
-  //     )
-  //   );
-  // };
-
-  // const moveCard = async (cardId, targetBoardId) => {
-  //   try {
-  //     const response = await fetch("http://localhost:5000/api/tasks/moveCard", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ cardId, targetBoardId })
-  //   })
-
-  //   if(response.ok) {
-  //     const updatedBoards = boards.map((board) => {
-  //       return {
-  //         ...board,
-  //         cards: board.cards.filter((card) => card._id !== cardId),
-  //       };
-  //     });
-
-  //     const movedCard = tasks.find((task) => task._id === cardId)
-  //     const targetBoardIndex = updatedBoards.findIndex(
-  //       (board) => board.id === targetBoardId
-  //     );
-
-  //     updatedBoards[targetBoardIndex].cards.push(movedCard);
-
-  //     setBoards(updatedBoards);
-  //   } else {
-  //     console.error("Failed to move card:", response.statusText)
-  //   }} catch (error) {
-  //     console.error("Error moving card:", error)
-  //   }
-  // };
+  }, [dispatch]);
 
   const moveCard = async (cardId, targetBoardId) => {
     try {
@@ -183,7 +114,7 @@ const BoardSection = () => {
     });
   };
 
-  console.log(boards);
+  // console.log(boards);
   // console.log()
 
   return (
