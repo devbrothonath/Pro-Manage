@@ -179,8 +179,6 @@ const TaskForm = (props) => {
               <img src="/icons/greenCircle.svg" alt="green-icon" />
               LOW PRIORITY
             </button>
-            {/* <div className={styles.taskform_priority_btns}>
-            </div> */}
           </div>
           <div className={`${styles.taskform_tasks} ${styles.custom_scroll}`}>
             <div className={styles.taskform_tasks_tasklist}>

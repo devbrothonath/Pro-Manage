@@ -96,7 +96,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
             <div ref={menuRef} className={styles.card_menu_options}>
               <Link
                 to={`/card/edit/${card._id}`}
-                target="_blank"
+                target="_self"
                 className={styles.edit_btn}
               >
                 <span>Edit</span>
