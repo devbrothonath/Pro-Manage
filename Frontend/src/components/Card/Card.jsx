@@ -6,7 +6,7 @@ import copy from "clipboard-copy";
 import useTasksContext from "../../hooks/useTasksContext.jsx";
 
 import styles from "./Card.module.css";
-
+import { Link } from "react-router-dom";
 
 const Card = ({ card, onMoveCard, isInBoard }) => {
   const { dispatch } = useTasksContext();
@@ -94,7 +94,13 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
           </button> */}
           {open && (
             <div ref={menuRef} className={styles.card_menu_options}>
-              <span>Edit</span>
+              <Link
+                to={`/card/edit/${card._id}`}
+                target="_blank"
+                className={styles.edit_btn}
+              >
+                <span>Edit</span>
+              </Link>
               <span onClick={handleShare}>Share</span>
               <span onClick={handleDelete}>Delete</span>
             </div>
