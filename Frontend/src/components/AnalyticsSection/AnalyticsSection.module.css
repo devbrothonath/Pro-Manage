@@ -1,0 +1,38 @@
+.analyticsSection {
+    padding: 30px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.analyticsSection_title span {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.analyticsSection_stats {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.analyticsSection_stats > div > div {
+    padding: 20px;
+}
+
+.analyticsSection_stats img {
+    margin-right: 15px;
+}
+
+.analyticsSection_stats_tasks {
+    width: 350px;
+    background-color: #F9FCFF;
+}
+
+.analyticsSection_stats_tasks_task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.value {
+    font-weight: 600;
+}
