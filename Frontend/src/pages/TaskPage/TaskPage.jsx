@@ -35,15 +35,30 @@ const TaskPage = () => {
   // console.log(task.tasklist);
   // console.log(completedTasksCount)
 
+  const getPriorityIcon = (priority) => {
+    switch (priority) {
+      case "high":
+        return "/icons/redCircle.svg";
+      case "moderate":
+        return "/icons/blueCircle.svg";
+      case "low":
+        return "/icons/greenCircle.svg";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <div>
+    <div className={styles.taskpage}>
       {task && (
-        <div className={styles.taskpage}>
+        <div className={styles.taskpage_box}>
           <div className={styles.taskpage_top}>
-            <div className={styles.taskpage_top_label}>{task.priority}</div>
+            <div className={styles.taskpage_top_label}>
+              <img src={getPriorityIcon(task.priority)} alt={`${task.priority} priority icon`} />
+              <span>{task.priority} priority</span></div>
             <div className={styles.taskpage_top_title}>{task.title}</div>
           </div>
-          <div className={styles.taskpage_tasks}>
+          <div className={`${styles.taskpage_tasks} ${styles.custom_scroll}`}>
             <div className={styles.taskpage_tasks_count}>
               <span>Checklist</span>
               <span>
@@ -60,9 +75,9 @@ const TaskPage = () => {
             </div>
           </div>
           {formattedDate && (
-            <div className={styles.footer}>
+            <div className={styles.taskpage_footer}>
               <span>Due Date</span>
-              <span>{formattedDate}</span>
+              <span className={styles.date_value}>{formattedDate}</span>
             </div>
           )}
         </div>

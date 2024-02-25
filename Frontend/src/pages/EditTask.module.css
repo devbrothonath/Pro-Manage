@@ -18,7 +18,7 @@
   height: 100vh;
   justify-content: center;
   align-items: center;
-  border: 2px solid #edf5fe;
+  /* border: 2px solid #edf5fe; */
   /* background-color: red; */
 }
 
@@ -79,8 +79,6 @@
   box-shadow: 0px 1px 2px 0px #4d40551a;
   padding: 3px 8px;
   text-transform: uppercase;
-  /* margin: 0 3px; */
-  /* cursor: pointer; */
 }
 
 .editTask_priority img {
