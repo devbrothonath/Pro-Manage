@@ -111,32 +111,12 @@ const AnalyticsSection = () => {
                 className={styles.analyticsSection_stats_tasks_task}
               >
                 <div>
-                  <img src={priority.img} alt="icon" />
+                  <img src={priority.img} alt="gray-circle-icon" />
                   <span>{priority.title}</span>
                 </div>
                 <span className={styles.value}>{priority.value}</span>
               </div>
             ))}
-          {/* <div>
-            <img src="/icons/grayCircle.svg" alt="gray-circle-icon" />
-            <span>Low Tasks</span>
-            <span className={styles.value}>0</span>
-          </div>
-          <div>
-            <img src="/icons/grayCircle.svg" alt="gray-circle-icon" />
-            <span>Moderate Tasks</span>
-            <span className={styles.value}>0</span>
-          </div>
-          <div>
-            <img src="/icons/grayCircle.svg" alt="gray-circle-icon" />
-            <span>High Tasks</span>
-            <span className={styles.value}>0</span>
-          </div>
-          <div>
-            <img src="/icons/grayCircle.svg" alt="gray-circle-icon" />
-            <span>Due Date Tasks</span>
-            <span className={styles.value}>0</span>
-          </div> */}
         </div>
       </div>
     </div>

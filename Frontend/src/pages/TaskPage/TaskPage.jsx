@@ -50,12 +50,20 @@ const TaskPage = () => {
 
   return (
     <div className={styles.taskpage}>
+      <div className={styles.taskpage_logo}>
+        <img src="/icons/codesandbox.svg" alt="logo-icon" />
+        <span>Pro Manage</span>
+      </div>
       {task && (
         <div className={styles.taskpage_box}>
           <div className={styles.taskpage_top}>
             <div className={styles.taskpage_top_label}>
-              <img src={getPriorityIcon(task.priority)} alt={`${task.priority} priority icon`} />
-              <span>{task.priority} priority</span></div>
+              <img
+                src={getPriorityIcon(task.priority)}
+                alt={`${task.priority} priority icon`}
+              />
+              <span>{task.priority} priority</span>
+            </div>
             <div className={styles.taskpage_top_title}>{task.title}</div>
           </div>
           <div className={`${styles.taskpage_tasks} ${styles.custom_scroll}`}>

@@ -23,8 +23,9 @@
 }
 
 .analyticsSection_stats_tasks {
+    border-radius: 10px;
     width: 350px;
-    background-color: #F9FCFF;
+    background-color: #e2eefa;
 }
 
 .analyticsSection_stats_tasks_task {

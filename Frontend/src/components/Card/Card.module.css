@@ -110,11 +110,11 @@
 }
 
 .tasklist_task {
-  height: 40px;
+  height: fit-content;
   display: flex;
   align-items: center;
   border: 1px solid #c2c2c2a9;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0px 1px 2px 0px #4d40551a;
   padding: 0px 10px;
   margin: 10px 0;
@@ -126,15 +126,9 @@
   pointer-events: none;
 }
 
-.tasklist_task input[type="checkbox"]:disabled {
-  /* opacity: 0.5; Set the opacity to make it visually less prominent */
-  /* cursor: not-allowed; */
-  /* opacity: 2.5; */
-}
-
 .tasklist_task span {
   font-family: var(--sub-font);
-  margin: 0 10px;
+  margin: 10px 10px;
 }
 
 .footer {

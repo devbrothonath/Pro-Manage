@@ -108,7 +108,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
         </div>
       </div>
       <div className={styles.card_title}>
-        <span>{card.title}</span>
+        <span title={card.title}>{card.title.length > 23 ? `${card.title.slice(0,23)}...` : card.title}</span>
       </div>
       <div className={styles.card_checklist}>
         <div className={styles.task_count}>

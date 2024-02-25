@@ -21,6 +21,10 @@
   /* background-color: red; */
 }
 
+.taskpage_logo {
+  display: none;
+}
+
 .taskpage_box {
   padding: 25px 30px;
   background: #fff;
@@ -112,4 +116,25 @@
   margin: 0 10px;
   padding: 5px 10px;
   border-radius: 10px;
+}
+
+/* Mobile CSS */
+
+@media (min-width: 300px) and (max-width: 770px) {
+  .taskpage_box {
+    width: 80%;
+  }
+
+  .taskpage_logo {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 30px;
+    font-family: var(--main-font);
+    font-weight: 700;
+  }
+
+  .taskpage_logo img {
+    padding-right: 10px;
+  }
 }
