@@ -28,8 +28,8 @@ const BoardSection = () => {
       try {
         const response = await fetch("http://localhost:5000/api/tasks", {
           headers: {
-            "Authorization": `Bearer ${user.token}`
-          }
+            Authorization: `Bearer ${user.token}`,
+          },
         });
         const json = await response.json();
 
@@ -76,6 +76,7 @@ const BoardSection = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify({ cardId, targetBoardId }),
       });
@@ -83,7 +84,12 @@ const BoardSection = () => {
       if (response.ok) {
         // Fetch the updated data from the server
         const updatedDataResponse = await fetch(
-          "http://localhost:5000/api/tasks"
+          "http://localhost:5000/api/tasks",
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
         const updatedData = await updatedDataResponse.json();
 
