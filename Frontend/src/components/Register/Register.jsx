@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useRegister from "../../hooks/useRegister.jsx"
 
 import styles from "./Register.module.css";
 
@@ -8,10 +9,12 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const {register, error, isLoading} = useRegister()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    await register(name, email, password, confirmPassword)
     console.log(name, email, password);
   };
   return (
@@ -69,7 +72,7 @@ const Register = () => {
             </div>
           </div>
           <div className={styles.register_formBox_form_submit}>
-            <button onClick={handleSubmit}>Register</button>
+            <button onClick={handleSubmit} disabled={isLoading}>Register</button>
           </div>
           <div className={styles.register_formBox_form_login}>
             <span>Have an account?</span>
@@ -77,6 +80,7 @@ const Register = () => {
               <button>Log in</button>
             </Link>
           </div>
+          {error && <div className={styles.error}>{error}</div>}
         </div>
       </div>
     </div>

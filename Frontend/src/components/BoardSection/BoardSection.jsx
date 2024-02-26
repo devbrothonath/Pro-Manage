@@ -4,9 +4,15 @@ import { format } from "date-fns";
 import styles from "./BoardSection.module.css";
 import Board from "../Boards/Board.jsx";
 import useTasksContext from "../../hooks/useTasksContext.jsx";
+import useAuthContext from "../../hooks/useAuthContext.jsx";
 
 const BoardSection = () => {
   const { tasks, dispatch } = useTasksContext();
+  const { user } = useAuthContext()
+  const userString = localStorage.getItem("user")
+  const userObject = JSON.parse(userString)
+const userName = userObject.user.name
+  console.log(userObject.user.name)
   // const [tasks, setTasks] = useState(null);
   const { contextBoards } = useTasksContext([]);
   const [boards, setBoards] = useState([]);
@@ -139,7 +145,7 @@ const BoardSection = () => {
     <div className={styles.boardSection}>
       <div className={styles.welcome_date}>
         <div className={styles.welcome_span}>
-          <span>Welcome! Dev</span>
+          <span>Welcome! {userName}</span>
         </div>
         <div className={styles.date_span}>
           <span>{formattedDate}</span>

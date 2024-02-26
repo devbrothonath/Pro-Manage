@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 import styles from "./Login.module.css";
 
 const Login = () => {
+  // const {dispatch} = useLogin()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    await login(email, password);
   };
   return (
     <div className={styles.login}>
@@ -45,15 +48,17 @@ const Login = () => {
               />
               <img src="/icons/eye.svg" alt="eye-icon" />
             </div>
-
           </div>
-            <div className={styles.login_formBox_form_submit}>
-              <button onClick={handleSubmit}>Log in</button>
-            </div>
+          <div className={styles.login_formBox_form_submit}>
+            <button onClick={handleSubmit} disabled={isLoading}>Log in</button>
+          </div>
           <div className={styles.login_formBox_form_login}>
             <span>Have no account yet?</span>
-            <Link to="/register"><button>Register</button></Link>
+            <Link to="/register">
+              <button>Register</button>
+            </Link>
           </div>
+          {error && <div className={styles.error}>{error}</div>}
         </div>
       </div>
     </div>
