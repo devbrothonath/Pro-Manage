@@ -12,8 +12,6 @@ const BoardSection = () => {
   const userString = localStorage.getItem("user");
   const userObject = JSON.parse(userString);
   const userName = userObject && userObject.name;
-  console.log(userObject);
-  // const [tasks, setTasks] = useState(null);
   const { contextBoards } = useTasksContext([]);
   const [boards, setBoards] = useState([]);
   const today = new Date();

@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 
 // GET all tasks
 const getTasks = async (req, res) => {
-  const tasks = await Task.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+
+  const tasks = await Task.find({ user_id }).sort({ createdAt: -1 });
 
   res.status(200).json(tasks);
 };
@@ -27,14 +29,14 @@ const getTask = async (req, res) => {
 
 // POST a new task
 const createTask = async (req, res) => {
-  const taskData = req.body;
+  const {title, priority, tasklist, boardId, dueDate} = req.body;
 
   let emptyFields = []
 
-  if (!taskData.title) {
+  if (!title) {
     emptyFields.push("title")
   }
-  if (!taskData.priority) {
+  if (!priority) {
     emptyFields.push("priority")
   }
   // if (!taskData.taskList) {
@@ -45,7 +47,8 @@ const createTask = async (req, res) => {
   }
   // add document to db
   try {
-    const task = await Task.create(taskData);
+    const user_id = req.user._id;
+    const task = await Task.create({title, priority, tasklist, boardId, dueDate, user_id});
     res.status(200).json(task);
   } catch (error) {
     res.status(400).json({ error: error.message });

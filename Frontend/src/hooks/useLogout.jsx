@@ -1,9 +1,9 @@
 import useAuthContext from "./useAuthContext"
-// import useQuizzesContext from "./useQuizzesContext"
+import useTasksContext from "./useTasksContext"
 
 const useLogout = () => {
     const { dispatch } = useAuthContext()
-    // const { dispatch: quizzesContext } = useQuizzesContext()
+    const { dispatch: tasksDispatch } = useTasksContext()
 
     const logout = () => {
         // remove user from localStorage
@@ -11,7 +11,7 @@ const useLogout = () => {
 
         // dispatch logout action
         dispatch({type: "LOGOUT"})
-        // quizzesContext({type: "SET_QUIZZES", payload: null})
+        tasksDispatch({type: "SET_TASKS", payload: null})
     }
     
     return {logout}
