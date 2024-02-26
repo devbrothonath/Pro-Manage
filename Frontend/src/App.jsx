@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import useAuthContext from "./hooks/useAuthContext.jsx";
 
 import styles from "./App.module.css";
 
@@ -10,14 +11,15 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 
 export default function App() {
+  const { user } = useAuthContext()
   return (
     <div className="App">
       <BrowserRouter>
         <div className="pages">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/register" element={!user ? <RegisterPage /> : <Navigate to="/" />} />
+            <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/" />} />
             <Route path="/card/:id" element={<TaskPage />} />
             <Route path="/card/edit/:id" element={<EditTask />} />
           </Routes>

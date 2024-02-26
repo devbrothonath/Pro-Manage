@@ -11,7 +11,7 @@ const BoardSection = () => {
   const { tasks, dispatch } = useTasksContext();
   const userString = localStorage.getItem("user");
   const userObject = JSON.parse(userString);
-  const userName = userObject && userObject.user.name;
+  const userName = userObject && userObject.name;
   console.log(userObject);
   // const [tasks, setTasks] = useState(null);
   const { contextBoards } = useTasksContext([]);

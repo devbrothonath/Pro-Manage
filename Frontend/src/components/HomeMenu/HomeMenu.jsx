@@ -42,7 +42,7 @@ const HomeMenu = ({ handleButtonClick }) => {
           </Link>
         </div> */}
         <div>
-          <Link>
+          <Link to="/login">
             <button className={styles.logoutBtn} onClick={handleLogout}>
               <img src="/icons/logout.svg" alt="logout" />
               <span>Logout</span>
