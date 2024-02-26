@@ -35,7 +35,7 @@ export const tasksReducer = (state, action) => {
   }
 };
 
-export const TasksContextProvider = ({ children }) => {
+const TasksContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(tasksReducer, {
     tasks: null,
     // boards: null,
@@ -47,3 +47,5 @@ export const TasksContextProvider = ({ children }) => {
     </TasksContext.Provider>
   );
 };
+
+export default TasksContextProvider;

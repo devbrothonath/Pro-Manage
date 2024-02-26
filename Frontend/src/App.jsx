@@ -6,6 +6,8 @@ import styles from "./App.module.css";
 import Home from "./pages/Home.jsx";
 import TaskPage from "./pages/TaskPage/TaskPage.jsx";
 import EditTask from "./pages/EditTask.jsx";
+import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 
 export default function App() {
   return (
@@ -14,6 +16,8 @@ export default function App() {
         <div className="pages">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/card/:id" element={<TaskPage />} />
             <Route path="/card/edit/:id" element={<EditTask />} />
           </Routes>
