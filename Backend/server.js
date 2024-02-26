@@ -9,12 +9,14 @@ dotenv.config();
 
 /* ----- Routes ----- */
 const taskRoutes = require("./routes/tasks.js");
+const userRoutes = require("./routes/user.js");
 
 /* ------ Middleware ----- */
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/tasks", taskRoutes);
+app.use("/api/user", userRoutes);
 
 /* -------- Server State API -------- */
 const serverState = "active";
