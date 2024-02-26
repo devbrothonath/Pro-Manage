@@ -4,11 +4,13 @@ import { toast } from "react-toastify";
 
 import copy from "clipboard-copy";
 import useTasksContext from "../../hooks/useTasksContext.jsx";
+import useAuthContext from "../../hooks/useAuthContext.jsx";
 
 import styles from "./Card.module.css";
 import { Link } from "react-router-dom";
 
 const Card = ({ card, onMoveCard, isInBoard }) => {
+  const { user } = useAuthContext();
   const { dispatch } = useTasksContext();
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
@@ -39,10 +41,17 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
   });
 
   const handleDelete = async () => {
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
     const response = await fetch(
       "http://localhost:5000/api/tasks/" + card._id,
       {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await response.json();
@@ -108,7 +117,11 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
         </div>
       </div>
       <div className={styles.card_title}>
-        <span title={card.title}>{card.title.length > 23 ? `${card.title.slice(0,23)}...` : card.title}</span>
+        <span title={card.title}>
+          {card.title.length > 23
+            ? `${card.title.slice(0, 23)}...`
+            : card.title}
+        </span>
       </div>
       <div className={styles.card_checklist}>
         <div className={styles.task_count}>

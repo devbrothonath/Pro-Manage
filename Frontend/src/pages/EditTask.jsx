@@ -7,8 +7,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "./EditTask.module.css";
+import useAuthContext from "../hooks/useAuthContext";
 
 const EditTask = () => {
+  const { user } = useAuthContext();
   const { id } = useParams();
   const [task, setTask] = useState();
   const { dispatch } = useTasksContext();
@@ -99,6 +101,12 @@ const EditTask = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(!user) {
+      setError("You must be logged in")
+      return
+    }
+
     console.log(task._id);
     const response = await fetch(
       "http://localhost:5000/api/tasks/" + task._id,
@@ -109,6 +117,7 @@ const EditTask = () => {
         }),
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`
         },
       }
     );

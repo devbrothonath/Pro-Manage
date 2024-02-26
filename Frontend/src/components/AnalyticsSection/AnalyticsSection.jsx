@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import styles from "./AnalyticsSection.module.css";
+import useAuthContext from "../../hooks/useAuthContext";
 
 const AnalyticsSection = () => {
+  const { user } = useAuthContext();
   const [low, setLow] = useState("");
   const [moderate, setModerate] = useState("");
   const [high, setHigh] = useState("");
@@ -10,7 +12,11 @@ const AnalyticsSection = () => {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const response = await fetch("http://localhost:5000/api/tasks");
+      const response = await fetch("http://localhost:5000/api/tasks", {
+        headers: {
+          "Authorization": `Bearer ${user.token}`
+        }
+      });
       const json = await response.json();
 
       const highTasksFilter = json.filter(

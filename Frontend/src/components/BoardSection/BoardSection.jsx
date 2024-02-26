@@ -7,12 +7,12 @@ import useTasksContext from "../../hooks/useTasksContext.jsx";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
 
 const BoardSection = () => {
+  const { user } = useAuthContext();
   const { tasks, dispatch } = useTasksContext();
-  const { user } = useAuthContext()
-  const userString = localStorage.getItem("user")
-  const userObject = JSON.parse(userString)
-const userName = userObject.user.name
-  console.log(userObject.user.name)
+  const userString = localStorage.getItem("user");
+  const userObject = JSON.parse(userString);
+  const userName = userObject && userObject.user.name;
+  console.log(userObject);
   // const [tasks, setTasks] = useState(null);
   const { contextBoards } = useTasksContext([]);
   const [boards, setBoards] = useState([]);
@@ -26,7 +26,11 @@ const userName = userObject.user.name
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/tasks");
+        const response = await fetch("http://localhost:5000/api/tasks", {
+          headers: {
+            "Authorization": `Bearer ${user.token}`
+          }
+        });
         const json = await response.json();
 
         if (response.ok) {
@@ -61,8 +65,10 @@ const userName = userObject.user.name
       }
     };
 
-    fetchTasks();
-  }, [dispatch]);
+    if (user) {
+      fetchTasks();
+    }
+  }, [dispatch, user]);
 
   const moveCard = async (cardId, targetBoardId) => {
     try {
@@ -144,9 +150,11 @@ const userName = userObject.user.name
   return (
     <div className={styles.boardSection}>
       <div className={styles.welcome_date}>
-        <div className={styles.welcome_span}>
-          <span>Welcome! {userName}</span>
-        </div>
+        {userName && (
+          <div className={styles.welcome_span}>
+            <span>Welcome! {userName}</span>
+          </div>
+        )}
         <div className={styles.date_span}>
           <span>{formattedDate}</span>
         </div>

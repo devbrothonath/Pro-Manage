@@ -5,8 +5,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import Modal from "../Modal/Modal";
 
 import styles from "./TaskForm.module.css";
+import useAuthContext from "../../hooks/useAuthContext";
 
 const TaskForm = (props) => {
+  const { user } = useAuthContext();
   const {dispatch} = useTasksContext()
   const [completedTasks, setCompletedTasks] = useState(0);
   const [taskCount, setTaskCount] = useState(1);
@@ -98,6 +100,11 @@ const TaskForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(!user) {
+      setError("You must be logged in")
+      return
+    }
+
     const response = await fetch("http://localhost:5000/api/tasks", {
       method: "POST",
       body: JSON.stringify({
@@ -106,6 +113,7 @@ const TaskForm = (props) => {
       }),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`
       },
     });
 
