@@ -15,7 +15,6 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
-  const menus = ["Edit", "Share", "Delete"];
   const dueDate = new Date(card.dueDate);
   const formattedDate = format(dueDate, "MMM do");
   const btnRef = useRef();
@@ -58,6 +57,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
 
     if (response.ok) {
       dispatch({ type: "DELETE_TASK", payload: json });
+      toast("Task card deleted, please refresh the page.");
     }
   };
 

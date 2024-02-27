@@ -6,6 +6,10 @@ import TaskForm from "../TaskForm/TaskForm";
 
 const Board = ({ addButton, board, onMoveCard, isInBoard }) => {
   const [showModal, setShowModal] = useState(false);
+
+  const handleUpdate = () => {
+    alert("This feature is under development")
+  }
   return (
     <div className={styles.board}>
       <div className={styles.board_top}>
@@ -20,7 +24,7 @@ const Board = ({ addButton, board, onMoveCard, isInBoard }) => {
             </button>
           )}
           {showModal && <TaskForm onClose={() => setShowModal(false)} />}
-          <button className={styles.collapse_all_btn}>
+          <button onClick={handleUpdate} className={styles.collapse_all_btn}>
             <img src="/icons/collapse.svg" alt="collapse-icon" />
           </button>
         </div>

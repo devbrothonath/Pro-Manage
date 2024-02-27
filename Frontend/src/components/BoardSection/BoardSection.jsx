@@ -142,6 +142,10 @@ const BoardSection = () => {
     }
   });
 
+  const handleUpdate = () => {
+    alert("This feature is under development")
+  }
+
   // console.log(boards);
   // console.log()
   // const date = new Date().toLocaleDateString("en-US", {
@@ -178,8 +182,8 @@ const BoardSection = () => {
           {open && (
             <div ref={menuRef} className={styles.week_filter_options}>
               <span>This week</span>
-              <span>This month</span>
-              <span>This year</span>
+              <span onClick={handleUpdate}>This month</span>
+              <span onClick={handleUpdate}>This year</span>
             </div>
           )}
         </div>

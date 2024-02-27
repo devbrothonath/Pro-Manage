@@ -8,6 +8,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
+  const [passwordType, setPasswordType] = useState(false)
+
+  const handlePassword = () => {
+    setPasswordType(passwordType ? false : true)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,12 +46,12 @@ const Login = () => {
             <div>
               <img src="/icons/lock.svg" alt="lock-icon" />
               <input
-                type="password"
+                type={passwordType ? "text" : "password"}
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              <img src="/icons/eye.svg" alt="eye-icon" />
+              <img onClick={handlePassword} src="/icons/eye.svg" alt="eye-icon" />
             </div>
           </div>
           <div className={styles.login_formBox_form_submit}>

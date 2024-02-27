@@ -10,6 +10,16 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const {register, error, isLoading} = useRegister()
+  const [passwordType, setPasswordType] = useState(false)
+  const [confirmPasswordType, setConfirmPasswordType] = useState(false)
+
+  const handlePassword = () => {
+    setPasswordType(passwordType ? false : true)
+  }
+
+  const handleConfirmPassword = () => {
+    setConfirmPasswordType(confirmPasswordType ? false : true)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,22 +63,22 @@ const Register = () => {
             <div>
               <img src="/icons/lock.svg" alt="lock-icon" />
               <input
-                type="password"
+                type={passwordType ? "text" : "password"}
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              <img src="/icons/eye.svg" alt="eye-icon" />
+              <img onClick={handlePassword} src="/icons/eye.svg" alt="eye-icon" />
             </div>
             <div>
               <img src="/icons/lock.svg" alt="lock-icon" />
               <input
-                type="password"
+                type={confirmPasswordType ? "text" : "password"}
                 placeholder="Confirm Password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 value={confirmPassword}
               />
-              <img src="/icons/eye.svg" alt="eye-icon" />
+              <img onClick={handleConfirmPassword} src="/icons/eye.svg" alt="eye-icon" />
             </div>
           </div>
           <div className={styles.register_formBox_form_submit}>
