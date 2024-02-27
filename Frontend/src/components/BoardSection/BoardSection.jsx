@@ -70,7 +70,7 @@ const BoardSection = () => {
 
   const moveCard = async (cardId, targetBoardId) => {
     try {
-      const response = await fetch("http://localhost:5000/api/tasks/moveCard", {
+      const response = await fetch("https://pro-manage-xv2j.onrender.com/api/tasks/moveCard", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const BoardSection = () => {
       if (response.ok) {
         // Fetch the updated data from the server
         const updatedDataResponse = await fetch(
-          "http://localhost:5000/api/tasks",
+          "https://pro-manage-xv2j.onrender.com/api/tasks",
           {
             headers: {
               Authorization: `Bearer ${user.token}`,

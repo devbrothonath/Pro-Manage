@@ -45,7 +45,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
       return;
     }
     const response = await fetch(
-      "http://localhost:5000/api/tasks/" + card._id,
+      "https://pro-manage-xv2j.onrender.com/api/tasks/" + card._id,
       {
         method: "DELETE",
         headers: {
@@ -63,7 +63,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
 
   const handleShare = async () => {
     console.log(card._id);
-    await copy(`http://localhost:5173/card/${card._id}`);
+    await copy(`https://pro-manage-xv2j.onrender.com/card/${card._id}`);
     setLinkCopied(true);
     toast("Link copied to clipboard");
   };

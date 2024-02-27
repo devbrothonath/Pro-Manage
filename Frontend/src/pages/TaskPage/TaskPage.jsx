@@ -14,7 +14,7 @@ const TaskPage = () => {
 
   useEffect(() => {
     const fetchTask = async () => {
-      const response = await fetch(`http://localhost:5000/api/tasks/${id}`);
+      const response = await fetch(`https://pro-manage-xv2j.onrender.com/api/tasks/${id}`);
       const json = await response.json();
       setTask(json);
 
