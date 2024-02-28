@@ -63,7 +63,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
 
   const handleShare = async () => {
     console.log(card._id);
-    await copy(`https://pro-manage-xv2j.onrender.com/card/${card._id}`);
+    await copy(`https://pro-manage-five.vercel.app/card/${card._id}`);
     setLinkCopied(true);
     toast("Link copied to clipboard");
   };
