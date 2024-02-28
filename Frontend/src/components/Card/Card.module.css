@@ -12,14 +12,12 @@
 
 .card_label {
   font-family: var(--main-font);
-  /* background-color: red; */
   display: flex;
   align-items: center;
-  /* padding: 3px; */
 }
 
 .card_label img {
-    margin: 0 5px 0 0;
+  margin: 0 5px 0 0;
 }
 
 .card_label > span {
@@ -64,7 +62,7 @@
 }
 
 .card_menu_options span:nth-child(3) {
-  color: #CF3636;
+  color: #cf3636;
 }
 
 .card_menu_options span:hover {

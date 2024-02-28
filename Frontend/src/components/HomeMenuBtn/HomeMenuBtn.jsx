@@ -1,12 +1,15 @@
 import React from "react";
 
-import styles from "./HomeMenuBtn.module.css"
+// styles
+import styles from "./HomeMenuBtn.module.css";
 
 const HomeMenuBtn = ({ label, icon, alt, handleButtonClick }) => {
   return (
     <div>
       <button className={styles.btn} onClick={() => handleButtonClick(label)}>
-        <span><img src={icon} alt={alt} /></span>
+        <span>
+          <img src={icon} alt={alt} />
+        </span>
         <span>{label}</span>
       </button>
     </div>

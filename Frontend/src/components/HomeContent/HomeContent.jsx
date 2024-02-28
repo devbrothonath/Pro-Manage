@@ -1,9 +1,12 @@
 import React from "react";
 
-import styles from "./HomeContent.module.css";
+// components
 import BoardSection from "../BoardSection/BoardSection";
 import AnalyticsSection from "../AnalyticsSection/AnalyticsSection";
 import SettingsSection from "../SettingsSection/SettingsSection";
+
+// styles
+import styles from "./HomeContent.module.css";
 
 const HomeContent = ({ activeSection }) => {
   return (

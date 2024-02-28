@@ -1,17 +1,3 @@
-.custom_scroll::-webkit-scrollbar {
-  height: 10px;
-}
-
-.custom_scroll::-webkit-scrollbar-thumb {
-  border-radius: 30px;
-  border: 1px solid #f8f8f8;
-  background: #8daab9cc;
-}
-
-.custom_scroll::-webkit-scrollbar-thumb:hover {
-  background: #829caa;
-}
-
 .boardSection {
   display: flex;
   flex-direction: column;
@@ -66,7 +52,7 @@
 
 .week_filter_options {
   position: absolute;
-  width:max-content;
+  width: max-content;
   top: 100%;
   right: 0;
   font-family: var(--main-font);

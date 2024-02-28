@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import styles from "./AnalyticsSection.module.css";
+// components
 import useAuthContext from "../../hooks/useAuthContext";
+
+// styles
+import styles from "./AnalyticsSection.module.css";
 
 const AnalyticsSection = () => {
   const { user } = useAuthContext();

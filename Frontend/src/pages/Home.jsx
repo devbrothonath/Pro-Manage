@@ -8,7 +8,6 @@ import HomeMenu from "../components/HomeMenu/HomeMenu.jsx";
 import HomeContent from "../components/HomeContent/HomeContent.jsx";
 
 const Home = () => {
-
   const [activeSection, setActiveSection] = useState("Board");
   const handleButtonClick = (label) => {
     setActiveSection(label);
@@ -19,9 +18,6 @@ const Home = () => {
         <HomeMenu handleButtonClick={handleButtonClick} />
         <HomeContent activeSection={activeSection} />
       </div>
-      {/* <div className="tasks">
-        {tasks && tasks.map((task) => <TaskCard key={task._id} task={task} />)}
-      </div> */}
     </div>
   );
 };

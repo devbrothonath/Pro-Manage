@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 
-import styles from "./Board.module.css";
+// components
 import Card from "../Card/Card";
 import TaskForm from "../TaskForm/TaskForm";
+
+// styles
+import styles from "./Board.module.css";
+import scroll from "../CustomScroll/CustomScroll.module.css"
 
 const Board = ({ addButton, board, onMoveCard, isInBoard }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleUpdate = () => {
-    alert("This feature is under development")
-  }
+    alert("This feature is under development");
+  };
   return (
     <div className={styles.board}>
       <div className={styles.board_top}>
@@ -29,10 +33,15 @@ const Board = ({ addButton, board, onMoveCard, isInBoard }) => {
           </button>
         </div>
       </div>
-      <div className={`${styles.board_cards} ${styles.custom_scroll}`}>
+      <div className={`${styles.board_cards} ${scroll.custom_scroll}`}>
         {board.cards &&
           board.cards.map((card) => (
-            <Card key={card._id} card={card} onMoveCard={onMoveCard} isInBoard={isInBoard} />
+            <Card
+              key={card._id}
+              card={card}
+              onMoveCard={onMoveCard}
+              isInBoard={isInBoard}
+            />
           ))}
       </div>
     </div>

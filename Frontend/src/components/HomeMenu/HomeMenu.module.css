@@ -1,13 +1,11 @@
 .menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    width: 16vw;
-    border-right: 2px solid #dfeeff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  width: 16vw;
+  border-right: 2px solid #dfeeff;
 }
-
-
 
 .logo {
   display: inline-flex;
@@ -22,32 +20,32 @@
 }
 
 .logo img {
-    padding: 0 10px;
+  padding: 0 10px;
 }
 
 .logoutBtn {
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
-    height: 30px;
-    padding: 20px 50px;
-    border: none;
-    outline: none;
-    overflow: hidden;
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-    background: none;
-    margin: 20px 0;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  padding: 20px 50px;
+  border: none;
+  outline: none;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  background: none;
+  margin: 20px 0;
 }
 
 .logoutBtn:hover {
-    background: #cf363644;
+  background: #cf363644;
 }
 
 .logoutBtn > img {
-    padding: 0 10px;
+  padding: 0 10px;
 }
 
 .logoutBtn > span {
-    color: #CF3636;
+  color: #cf3636;
 }

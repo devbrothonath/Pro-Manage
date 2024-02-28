@@ -5,9 +5,7 @@
 }
 
 .settingsSection_title {
-    margin: 20px 0;
-}
-.settingsSection_inputs {
+  margin: 20px 0;
 }
 
 .settingsSection_inputs > div {
@@ -40,19 +38,15 @@
   margin: 0 10px;
 }
 
-.settingsSection_update {
-    /* width: 100%; */
-}
-
 .settingsSection_update button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    background: #17A2B8;
-    color: #fff;
-    font-family: sans-serif;
-    font-size: 15px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #17a2b8;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 15px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
 }

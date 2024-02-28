@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+// styles
 import styles from "./SettingsSection.module.css";
 
 const SettingsSection = () => {

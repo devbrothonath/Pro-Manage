@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+
+// components
 import useLogin from "../../hooks/useLogin";
+
+// styles
 import styles from "./Login.module.css";
 
 const Login = () => {
@@ -8,11 +12,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
-  const [passwordType, setPasswordType] = useState(false)
+  const [passwordType, setPasswordType] = useState(false);
 
   const handlePassword = () => {
-    setPasswordType(passwordType ? false : true)
-  }
+    setPasswordType(passwordType ? false : true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,11 +55,17 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              <img onClick={handlePassword} src="/icons/eye.svg" alt="eye-icon" />
+              <img
+                onClick={handlePassword}
+                src="/icons/eye.svg"
+                alt="eye-icon"
+              />
             </div>
           </div>
           <div className={styles.login_formBox_form_submit}>
-            <button onClick={handleSubmit} disabled={isLoading}>Log in</button>
+            <button onClick={handleSubmit} disabled={isLoading}>
+              Log in
+            </button>
           </div>
           <div className={styles.login_formBox_form_login}>
             <span>Have no account yet?</span>

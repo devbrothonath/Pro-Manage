@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import useRegister from "../../hooks/useRegister.jsx"
 
+// components
+import useRegister from "../../hooks/useRegister.jsx";
+
+// styles
 import styles from "./Register.module.css";
 
 const Register = () => {
@@ -9,22 +12,22 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {register, error, isLoading} = useRegister()
-  const [passwordType, setPasswordType] = useState(false)
-  const [confirmPasswordType, setConfirmPasswordType] = useState(false)
+  const { register, error, isLoading } = useRegister();
+  const [passwordType, setPasswordType] = useState(false);
+  const [confirmPasswordType, setConfirmPasswordType] = useState(false);
 
   const handlePassword = () => {
-    setPasswordType(passwordType ? false : true)
-  }
+    setPasswordType(passwordType ? false : true);
+  };
 
   const handleConfirmPassword = () => {
-    setConfirmPasswordType(confirmPasswordType ? false : true)
-  }
+    setConfirmPasswordType(confirmPasswordType ? false : true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await register(name, email, password, confirmPassword)
+    await register(name, email, password, confirmPassword);
     console.log(name, email, password);
   };
   return (
@@ -46,7 +49,7 @@ const Register = () => {
               <img src="/icons/person.svg" alt="person-icon" />
               <input
                 type="text"
-                placeholder="Name"
+                placeholder="First Name"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               />
@@ -68,7 +71,11 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              <img onClick={handlePassword} src="/icons/eye.svg" alt="eye-icon" />
+              <img
+                onClick={handlePassword}
+                src="/icons/eye.svg"
+                alt="eye-icon"
+              />
             </div>
             <div>
               <img src="/icons/lock.svg" alt="lock-icon" />
@@ -78,11 +85,17 @@ const Register = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 value={confirmPassword}
               />
-              <img onClick={handleConfirmPassword} src="/icons/eye.svg" alt="eye-icon" />
+              <img
+                onClick={handleConfirmPassword}
+                src="/icons/eye.svg"
+                alt="eye-icon"
+              />
             </div>
           </div>
           <div className={styles.register_formBox_form_submit}>
-            <button onClick={handleSubmit} disabled={isLoading}>Register</button>
+            <button onClick={handleSubmit} disabled={isLoading}>
+              Register
+            </button>
           </div>
           <div className={styles.register_formBox_form_login}>
             <span>Have an account?</span>

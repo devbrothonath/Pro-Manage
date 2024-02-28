@@ -1,25 +1,8 @@
-.custom_scroll::-webkit-scrollbar {
-  width: 10px;
-}
-
-.custom_scroll::-webkit-scrollbar-thumb {
-  border-radius: 30px;
-  border: 1px solid #f8f8f8;
-  background: #8daab9cc;
-}
-
-.custom_scroll::-webkit-scrollbar-thumb:hover {
-  background: #829caa;
-}
-
 .editTask {
   display: flex;
-  /* flex-direction: column; */
   height: 100vh;
   justify-content: center;
   align-items: center;
-  /* border: 2px solid #edf5fe; */
-  /* background-color: red; */
 }
 
 .editTask_box {
@@ -55,10 +38,10 @@
 .editTask_priority {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+
   justify-content: space-between;
   gap: 10px;
-  /* flex-direction: row; */
+
   font-family: var(--sub-font);
 }
 
@@ -85,6 +68,11 @@
   margin: 0 5px;
 }
 
+.editTask_priority_btns {
+  display: flex;
+  justify-content: space-between;
+}
+
 .editTask_priority button {
   font-family: var(--main-font);
   font-weight: 500;
@@ -94,7 +82,6 @@
   border-radius: 5px;
   box-shadow: 0px 1px 2px 0px #4d40551a;
   padding: 3px 4px;
-  margin: 0 3px;
   cursor: pointer;
 }
 
@@ -103,7 +90,6 @@
 }
 
 .editTask_priority button:active {
-  /* padding: 10px; */
   background-color: #a8a7a742;
 }
 

@@ -1,9 +1,12 @@
 import React from "react";
-
-import styles from "./HomeMenu.module.css";
 import { Link } from "react-router-dom";
+
+// components
 import HomeMenuBtn from "../HomeMenuBtn/HomeMenuBtn.jsx";
 import useLogout from "../../hooks/useLogout.jsx";
+
+// styles
+import styles from "./HomeMenu.module.css";
 
 const HomeMenu = ({ handleButtonClick }) => {
   const { logout } = useLogout();
@@ -36,11 +39,6 @@ const HomeMenu = ({ handleButtonClick }) => {
         </div>
       </div>
       <div>
-        {/* <div>
-          <Link>
-            <button className={styles.menuBtn}>Login</button>
-          </Link>
-        </div> */}
         <div>
           <Link to="/login">
             <button className={styles.logoutBtn} onClick={handleLogout}>

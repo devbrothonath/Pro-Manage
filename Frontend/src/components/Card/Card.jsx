@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
-
 import copy from "clipboard-copy";
+
+// components
 import useTasksContext from "../../hooks/useTasksContext.jsx";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
 
+// styles
 import styles from "./Card.module.css";
-import { Link } from "react-router-dom";
 
 const Card = ({ card, onMoveCard, isInBoard }) => {
   const { user } = useAuthContext();
@@ -75,7 +77,6 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
   const completedTasksCount = card.tasklist.filter(
     (task) => task.isCompleted
   ).length;
-  // setCompletedTasks(completedTasksCount);
 
   const handleMoveCard = (targetBoardId) => {
     console.log(targetBoardId);
@@ -99,8 +100,6 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
             src="/icons/more-options.svg"
             alt="more-options"
           />
-          {/* <button className={styles.more_options}>
-          </button> */}
           {open && (
             <div ref={menuRef} className={styles.card_menu_options}>
               <Link
@@ -143,13 +142,7 @@ const Card = ({ card, onMoveCard, isInBoard }) => {
           {card &&
             card.tasklist.map((task) => (
               <div key={task._id} className={styles.tasklist_task}>
-                <input
-                  type="checkbox"
-                  // name={`completed${taskIndex}`}
-                  defaultChecked={task.isCompleted}
-                  // disabled
-                  // onChange={(e) => handleInputChange(e, taskIndex)}
-                />
+                <input type="checkbox" defaultChecked={task.isCompleted} />
                 <span>{task.value}</span>
               </div>
             ))}

@@ -1,20 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import useTasksContext from "../../hooks/useTasksContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Modal from "../Modal/Modal";
 
-import styles from "./TaskForm.module.css";
+// components
+import Modal from "../Modal/Modal";
 import useAuthContext from "../../hooks/useAuthContext";
+
+// styles
+import styles from "./TaskForm.module.css";
+import scroll from "../CustomScroll/CustomScroll.module.css"
 
 const TaskForm = (props) => {
   const { user } = useAuthContext();
-  const {dispatch} = useTasksContext()
+  const { dispatch } = useTasksContext();
   const [completedTasks, setCompletedTasks] = useState(0);
   const [taskCount, setTaskCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([])
+  const [emptyFields, setEmptyFields] = useState([]);
   const [task, setTask] = useState({
     title: "",
     priority: "",
@@ -26,8 +30,6 @@ const TaskForm = (props) => {
     ],
     dueDate: "",
   });
-
-  //   console.log(selectedDate)
 
   const handleInputChange = (e, taskIndex, date) => {
     const { name, value, checked } = e.target;
@@ -63,18 +65,14 @@ const TaskForm = (props) => {
 
     const formattedDate = utcDate
       ? utcDate.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      }) 
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
       : "";
-
-    console.log(formattedDate);
 
     setTask({ ...task, dueDate: formattedDate });
   };
-
-  console.log(task.tasklist[0].value);
 
   const handleAddTask = () => {
     setTask({
@@ -95,39 +93,38 @@ const TaskForm = (props) => {
     setTask({ ...task, tasklist: updatedtasklist });
   };
 
-  console.log(task);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(!user) {
-      setError("You must be logged in")
-      return
+    if (!user) {
+      setError("You must be logged in");
+      return;
     }
 
-    const response = await fetch("https://pro-manage-xv2j.onrender.com/api/tasks", {
-      method: "POST",
-      body: JSON.stringify({
-        ...task,
-        tasklist: task.tasklist.map((item) => ({ ...item })),
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${user.token}`
-      },
-    });
+    const response = await fetch(
+      "https://pro-manage-xv2j.onrender.com/api/tasks",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          ...task,
+          tasklist: task.tasklist.map((item) => ({ ...item })),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
-    console.log(response);
     const json = await response.json();
 
     if (!response.ok) {
       setError(json.error);
-      setEmptyFields(json.emptyFields)
-      console.log(emptyFields)
+      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
-      console.log("new task added", json);
-      dispatch({type: "CREATE_TASK", payload: json})
+      // console.log("new task added", json);
+      dispatch({ type: "CREATE_TASK", payload: json });
       setTask({
         title: "",
         priority: "",
@@ -151,7 +148,9 @@ const TaskForm = (props) => {
         <div className={`${styles.taskform} ${styles.custom_scroll}`}>
           <div className={styles.taskform_box}>
             <div className={styles.taskform_box_title}>
-              <label>Title <span className={styles.required}>*</span></label>
+              <label>
+                Title <span className={styles.required}>*</span>
+              </label>
               <input
                 name="title"
                 type="text"
@@ -162,33 +161,43 @@ const TaskForm = (props) => {
             </div>
           </div>
           <div className={styles.taskform_priority}>
-            <label>Select Priority <span className={styles.required}>*</span></label>
-            <button
-              name="priority"
-              value="high"
-              onClick={(e) => handleInputChange(e)}
-            >
-              <img src="/icons/redCircle.svg" alt="red-icon" />
-              HIGH PRIORITY
-            </button>
-            <button
-              name="priority"
-              value="moderate"
-              onClick={(e) => handleInputChange(e)}
-            >
-              <img src="/icons/blueCircle.svg" alt="blue-icon" />
-              MODERATE PRIORITY
-            </button>
-            <button
-              name="priority"
-              value="low"
-              onClick={(e) => handleInputChange(e)}
-            >
-              <img src="/icons/greenCircle.svg" alt="green-icon" />
-              LOW PRIORITY
-            </button>
+            <div className={styles.taskform_priority_status}>
+              <span>Current priority </span>
+              <span className={styles.priority_value}>
+                {task.priority ? task.priority : "No value"}
+              </span>
+            </div>
+            <div className={styles.taskform_priority_btns}>
+              <label>
+                Select Priority <span className={styles.required}>*</span>
+              </label>
+              <button
+                name="priority"
+                value="high"
+                onClick={(e) => handleInputChange(e)}
+              >
+                <img src="/icons/redCircle.svg" alt="red-icon" />
+                HIGH PRIORITY
+              </button>
+              <button
+                name="priority"
+                value="moderate"
+                onClick={(e) => handleInputChange(e)}
+              >
+                <img src="/icons/blueCircle.svg" alt="blue-icon" />
+                MODERATE PRIORITY
+              </button>
+              <button
+                name="priority"
+                value="low"
+                onClick={(e) => handleInputChange(e)}
+              >
+                <img src="/icons/greenCircle.svg" alt="green-icon" />
+                LOW PRIORITY
+              </button>
+            </div>
           </div>
-          <div className={`${styles.taskform_tasks} ${styles.custom_scroll}`}>
+          <div className={`${styles.taskform_tasks} ${scroll.custom_scroll}`}>
             <div className={styles.taskform_tasks_tasklist}>
               <label>Checklist </label>
               <span>
@@ -196,7 +205,7 @@ const TaskForm = (props) => {
               </span>
               <span className={styles.required}>*</span>
               <div
-                className={`${styles.taskform_task_list} ${styles.custom_scroll}`}
+                className={`${styles.taskform_task_list} ${scroll.custom_scroll}`}
               >
                 {task &&
                   task.tasklist.map((task, taskIndex) => (
@@ -210,8 +219,9 @@ const TaskForm = (props) => {
                       <input
                         type="text"
                         placeholder="Add Task"
+                        autoFocus
                         name={`task${taskIndex}`}
-                        value={task.title}
+                        value={task.value}
                         onChange={(e) => handleInputChange(e, taskIndex)}
                       />
                       <button onClick={() => handleDeleteTask(taskIndex)}>
@@ -227,7 +237,6 @@ const TaskForm = (props) => {
           </div>
           <div className={styles.taskform_footer}>
             <div className={styles.taskform_footer_due_date}>
-              {/* <button onClick={() => setSelectedDate(new Date())}>Select Due Date</button> */}
               <DatePicker
                 selected={selectedDate}
                 onChange={handleDateChange}
@@ -236,7 +245,6 @@ const TaskForm = (props) => {
                 dateFormat="MMMM dd yyyy"
                 value={task.dueDate}
               />
-              {/* <input type="date" ref={dateInputRef} /> */}
             </div>
             <div className={styles.taskform_footer_actions}>
               <div className={styles.taskform_footer_actions_cancel}>
@@ -247,7 +255,9 @@ const TaskForm = (props) => {
               </div>
             </div>
           </div>
-              {error && <div className={styles.error}>Please fill all necessary fields</div>}
+          {error && (
+            <div className={styles.error}>Please fill all necessary fields</div>
+          )}
         </div>
       </Modal>
     </>

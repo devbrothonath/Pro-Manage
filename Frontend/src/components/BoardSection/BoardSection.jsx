@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { format } from "date-fns";
 
-import styles from "./BoardSection.module.css";
+// components
 import Board from "../Boards/Board.jsx";
 import useTasksContext from "../../hooks/useTasksContext.jsx";
 import useAuthContext from "../../hooks/useAuthContext.jsx";
+
+// styles
+import styles from "./BoardSection.module.css";
+import scroll from "../CustomScroll/CustomScroll.module.css"
 
 const BoardSection = () => {
   const { user } = useAuthContext();
@@ -12,23 +16,24 @@ const BoardSection = () => {
   const userString = localStorage.getItem("user");
   const userObject = JSON.parse(userString);
   const userName = userObject && userObject.name;
-  const { contextBoards } = useTasksContext([]);
   const [boards, setBoards] = useState([]);
   const today = new Date();
   const formattedDate = format(today, "do MMM, yyyy");
   const [open, setOpen] = useState(false);
   const btnRef = useRef();
   const menuRef = useRef();
-  // console.log(formattedDate)
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch("https://pro-manage-xv2j.onrender.com/api/tasks", {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
+        const response = await fetch(
+          "https://pro-manage-xv2j.onrender.com/api/tasks",
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
         const json = await response.json();
 
         if (response.ok) {
@@ -70,14 +75,17 @@ const BoardSection = () => {
 
   const moveCard = async (cardId, targetBoardId) => {
     try {
-      const response = await fetch("https://pro-manage-xv2j.onrender.com/api/tasks/moveCard", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ cardId, targetBoardId }),
-      });
+      const response = await fetch(
+        "https://pro-manage-xv2j.onrender.com/api/tasks/moveCard",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({ cardId, targetBoardId }),
+        }
+      );
 
       if (response.ok) {
         // Fetch the updated data from the server
@@ -143,17 +151,8 @@ const BoardSection = () => {
   });
 
   const handleUpdate = () => {
-    alert("This feature is under development")
-  }
-
-  // console.log(boards);
-  // console.log()
-  // const date = new Date().toLocaleDateString("en-US", {
-  //   year: "numeric",
-  //   month: "short",
-  //   day: "numeric"
-  // })
-  // console.log(date)
+    alert("This feature is under development");
+  };
 
   return (
     <div className={styles.boardSection}>
@@ -188,7 +187,7 @@ const BoardSection = () => {
           )}
         </div>
       </div>
-      <div className={`${styles.boardsContainer} ${styles.custom_scroll}`}>
+      <div className={`${styles.boardsContainer} ${scroll.custom_scroll}`}>
         <div className={styles.boards}>
           {boards.map((board) => (
             <Board

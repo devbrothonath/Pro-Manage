@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import useTasksContext from "../hooks/useTasksContext";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import styles from "./EditTask.module.css";
+// components
+import useTasksContext from "../hooks/useTasksContext";
 import useAuthContext from "../hooks/useAuthContext";
+
+// styles
+import styles from "./EditTask.module.css";
+import scroll from "../components/CustomScroll/CustomScroll.module.css"
 
 const EditTask = () => {
   const { user } = useAuthContext();
@@ -17,12 +21,13 @@ const EditTask = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [formatDate, setFormatDate] = useState(null);
   const [showDate, setShowDate] = useState("");
-  // console.log(showDate)
   const [completedTasksCount, setCompletedTasksCount] = useState(0);
 
   useEffect(() => {
     const fetchTask = async () => {
-      const response = await fetch(`https://pro-manage-xv2j.onrender.com/api/tasks/${id}`);
+      const response = await fetch(
+        `https://pro-manage-xv2j.onrender.com/api/tasks/${id}`
+      );
       const json = await response.json();
       setTask(json);
 
@@ -33,7 +38,6 @@ const EditTask = () => {
       if (json.dueDate !== null) {
         const fullDate = format(json.dueDate, "MMMM dd yyyy");
         setShowDate(fullDate);
-        // console.log(showDate)
       }
     };
     fetchTask();
@@ -73,6 +77,7 @@ const EditTask = () => {
   const handleDeleteTask = (taskIndex) => {
     const updatedtasklist = [...task.tasklist];
     updatedtasklist.splice(taskIndex, 1);
+
     setTask({ ...task, tasklist: updatedtasklist });
   };
 
@@ -91,23 +96,19 @@ const EditTask = () => {
         })
       : "";
 
-    console.log(formattedDate);
     setFormatDate(formattedDate);
 
     setTask({ ...task, dueDate: formattedDate });
   };
 
-  console.log(task);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(!user) {
-      setError("You must be logged in")
-      return
+    if (!user) {
+      setError("You must be logged in");
+      return;
     }
 
-    console.log(task._id);
     const response = await fetch(
       "https://pro-manage-xv2j.onrender.com/api/tasks/" + task._id,
       {
@@ -117,26 +118,25 @@ const EditTask = () => {
         }),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${user.token}`
+          Authorization: `Bearer ${user.token}`,
         },
       }
     );
     const json = await response.json();
-    console.log(json);
 
-    if(!response.ok) {
-      toast("something went wrong")
+    if (!response.ok) {
+      toast("something went wrong");
     }
 
     if (response.ok) {
       dispatch({ type: "UPDATE_TASK", payload: json });
-      toast("Task edited")
+      toast("Task edited");
     }
   };
 
-  const checkedTasks = ( task && task.tasklist.filter((task) => task.isCompleted).length)
+  const checkedTasks =
+    task && task.tasklist.filter((task) => task.isCompleted).length;
 
-  // console.log(showDate)
   return (
     <div>
       {task && (
@@ -159,9 +159,7 @@ const EditTask = () => {
                 <span className={styles.priority_value}>{task.priority}</span>
               </div>
               <div className={styles.editTask_priority_btns}>
-                <label>
-                  Select New Priority
-                </label>
+                <label>Select New Priority</label>
                 <button
                   name="priority"
                   value="high"
@@ -188,13 +186,13 @@ const EditTask = () => {
                 </button>
               </div>
             </div>
-            <div className={`${styles.editTask_tasks} ${styles.custom_scroll}`}>
+            <div className={`${styles.editTask_tasks} ${scroll.custom_scroll}`}>
               <div className={styles.tasklist}>
                 <label>Checklist </label>
                 <span>
                   ({checkedTasks}/{task.tasklist.length})
                 </span>
-                
+
                 <div className={`${styles.tasks} ${styles.custom_scroll}`}>
                   {task &&
                     task.tasklist.map((task, taskIndex) => (
@@ -227,7 +225,9 @@ const EditTask = () => {
               <div className={styles.footer_due_date}>
                 <div className={styles.due_date_status}>
                   <span>Current Due Date </span>
-                  <span className={styles.due_date_value}>{showDate ? showDate : "No date"}</span>
+                  <span className={styles.due_date_value}>
+                    {showDate ? showDate : "No date"}
+                  </span>
                 </div>
                 <DatePicker
                   selected={selectedDate}
@@ -235,13 +235,10 @@ const EditTask = () => {
                   placeholderText="Select New Due Date"
                   minDate={new Date()}
                   dateFormat="MMMM dd yyyy"
-                  // value={task.dueDate}
                 />
               </div>
               <div className={styles.footer_actions}>
-                <div className={styles.footer_actions_cancel}>
-                  {/* <Link to="/"><button>Cancel</button></Link> */}
-                </div>
+                <div className={styles.footer_actions_cancel}></div>
                 <div className={styles.footer_actions_save}>
                   <button onClick={handleSubmit}>Save</button>
                 </div>

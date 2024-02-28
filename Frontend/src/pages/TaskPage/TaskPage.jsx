@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 import styles from "./TaskPage.module.css";
+import scroll from "../../components/CustomScroll/CustomScroll.module.css"
 
 const TaskPage = () => {
   const { id } = useParams();
@@ -10,11 +11,12 @@ const TaskPage = () => {
   const [completedTasksCount, setCompletedTasksCount] = useState();
   const [dueDate, setDueDate] = useState();
   const [formattedDate, setFormattedDate] = useState();
-  // const  = format(dueDate, "MMM do")
 
   useEffect(() => {
     const fetchTask = async () => {
-      const response = await fetch(`https://pro-manage-xv2j.onrender.com/api/tasks/${id}`);
+      const response = await fetch(
+        `https://pro-manage-xv2j.onrender.com/api/tasks/${id}`
+      );
       const json = await response.json();
       setTask(json);
 
@@ -27,13 +29,9 @@ const TaskPage = () => {
         const formatDate = format(json.dueDate, "MMM do");
         setFormattedDate(formatDate);
       }
-
-      // setCompletedTasksCount(task.tasklist.filter((t) => t.isCompleted).length);
     };
     fetchTask();
   }, [id]);
-  // console.log(task.tasklist);
-  // console.log(completedTasksCount)
 
   const getPriorityIcon = (priority) => {
     switch (priority) {
@@ -66,7 +64,7 @@ const TaskPage = () => {
             </div>
             <div className={styles.taskpage_top_title}>{task.title}</div>
           </div>
-          <div className={`${styles.taskpage_tasks} ${styles.custom_scroll}`}>
+          <div className={`${styles.taskpage_tasks} ${scroll.custom_scroll}`}>
             <div className={styles.taskpage_tasks_count}>
               <span>Checklist</span>
               <span>
