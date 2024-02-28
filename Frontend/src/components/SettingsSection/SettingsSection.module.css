@@ -20,6 +20,10 @@
   padding: 20px 10px;
 }
 
+.eyeIcon {
+  cursor: pointer;
+}
+
 .settingsSection_inputs > div > input {
   flex: 1;
   height: 30px;

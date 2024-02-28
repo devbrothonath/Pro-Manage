@@ -57,6 +57,7 @@ const Login = () => {
               />
               <img
                 onClick={handlePassword}
+                className={styles.eyeIcon}
                 src="/icons/eye.svg"
                 alt="eye-icon"
               />

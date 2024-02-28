@@ -31,12 +31,12 @@ const SettingsSection = () => {
         <div>
           <img src="/icons/lock.svg" alt="lock-icon" />
           <input type={passwordType ? "text" : "password"} placeholder="Old Password" />
-          <img onClick={handlePasswordType} src="/icons/eye.svg" alt="eye-icon" />
+          <img onClick={handlePasswordType} className={styles.eyeIcon} src="/icons/eye.svg" alt="eye-icon" />
         </div>
         <div>
           <img src="/icons/lock.svg" alt="lock-icon" />
           <input type={newPasswordType ? "text" : "password"} placeholder="New Password" />
-          <img onClick={handleNewPasswordType} src="/icons/eye.svg" alt="eye-icon" />
+          <img onClick={handleNewPasswordType} className={styles.eyeIcon} src="/icons/eye.svg" alt="eye-icon" />
         </div>
       </div>
       <div className={styles.settingsSection_update}>

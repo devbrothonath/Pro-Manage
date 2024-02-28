@@ -64,7 +64,7 @@ const Register = () => {
               />
             </div>
             <div>
-              <img src="/icons/lock.svg" alt="lock-icon" />
+              <img src="/icons/lock.svg" alt="lock-icon"  />
               <input
                 type={passwordType ? "text" : "password"}
                 placeholder="Password"
@@ -73,12 +73,13 @@ const Register = () => {
               />
               <img
                 onClick={handlePassword}
+                className={styles.eyeIcon}
                 src="/icons/eye.svg"
                 alt="eye-icon"
               />
             </div>
             <div>
-              <img src="/icons/lock.svg" alt="lock-icon" />
+              <img src="/icons/lock.svg" alt="lock-icon"  />
               <input
                 type={confirmPasswordType ? "text" : "password"}
                 placeholder="Confirm Password"
@@ -87,6 +88,7 @@ const Register = () => {
               />
               <img
                 onClick={handleConfirmPassword}
+                className={styles.eyeIcon}
                 src="/icons/eye.svg"
                 alt="eye-icon"
               />

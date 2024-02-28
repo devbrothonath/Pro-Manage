@@ -19,6 +19,10 @@
   color: #fff;
 }
 
+.eyeIcon {
+  cursor: pointer;
+}
+
 .register_logoBox_logo span:nth-child(2) {
   font-size: 28px;
   padding: 10px 0;
